@@ -11,3 +11,7 @@ Although this project is very bad, but I put it on GitHub to encourage myself an
 --------------
 
 ![U{NA5HVN8_BR Y~BK8UW@ 2](https://user-images.githubusercontent.com/59989422/129043028-c760007b-a0e1-4a37-9b5f-e2ca60ba6c2a.png)
+
+-----
+
+Thank you for reading this and wish you a good day. 😃
