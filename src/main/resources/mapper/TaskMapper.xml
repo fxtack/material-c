@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxtack.materialc.mapper.TaskMapper">
+    <resultMap id="TaskResultMap" type="com.fxtack.materialc.entity.Task">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="task_title" jdbcType="VARCHAR" property="taskTitle"/>
+        <result column="task_tag" jdbcType="VARCHAR" property="taskTag"/>
+        <result column="task_deadline" jdbcType="TIMESTAMP" property="taskDeadline"/>
+        <result column="task_content" jdbcType="VARCHAR" property="taskContent"/>
+        <result column="task_appendix" jdbcType="VARCHAR" property="taskAppendix"/>
+        <result column="task_sponsor" jdbcType="VARCHAR" property="taskSponsor"/>
+        <result column="is_finish" jdbcType="INTEGER" property="isFinish"/>
+        <result column="task_project_id" jdbcType="INTEGER" property="taskProjectId"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        id, task_title, task_tag, task_deadline, task_content, task_appendix, task_sponsor,
+        is_finish, task_project_id
+    </sql>
+
+    <select id="selectAll" resultMap="TaskResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from task
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="TaskResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from task
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="countTag" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM task where task_tag like CONCAT('%',#{tag,jdbcType=VARCHAR},'%')
+    </select>
+
+    <insert id="insert" parameterType="com.fxtack.materialc.entity.Task">
+        insert into task(id, task_title, task_tag, task_deadline, task_content, task_appendix, task_sponsor,
+        is_finish, task_project_id)
+        values (
+            #{id, jdbcType=INTEGER}, #{taskTitle, jdbcType=VARCHAR}, #{taskTag, jdbcType=VARCHAR}, #{taskDeadline, jdbcType=VARCHAR},
+            #{taskContent, jdbcType=VARCHAR}, #{taskAppendix, jdbcType=VARCHAR}, #{taskSponsor, jdbcType=VARCHAR},
+            #{isFinish, jdbcType=INTEGER}, #{taskProjectId, jdbcType=INTEGER}
+        )
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fxtack.materialc.entity.Task">
+    update task
+    <set>
+        <if test="taskTitle != null">
+            task_title = #{taskTitle, jdbcType=VARCHAR},
+        </if>
+        <if test="taskTag != null">
+            task_tag = #{taskTag, jdbcType=VARCHAR},
+        </if>
+        <if test="taskDeadline != null">
+            task_deadline = #{taskDeadline, jdbcType=VARCHAR},
+        </if>
+        <if test="taskContent != null">
+            task_content = #{taskContent, jdbcType=VARCHAR},
+        </if>
+        <if test="taskAppendix != null">
+            task_appendix = #{taskAppendix, jdbcType=VARCHAR},
+        </if>
+         <if test="taskSponsor != null">
+             task_sponsor = #{taskSponsor, jdbcType=VARCHAR},
+         </if>
+         <if test="isFinish != null">
+             is_finish = #{isFinish, jdbcType=INTEGER},
+         </if>
+         <if test="taskProjectId != null">
+             task_project_id = #{taskProjectId, jdbcType=INTEGER}
+         </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from task
+        where id = #{id, jdbcType=INTEGER}
+    </delete>
+</mapper>

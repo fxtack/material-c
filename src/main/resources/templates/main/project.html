@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link href="vendors/quill/quill.snow.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="vendors/clockpicker/bootstrap-clockpicker.min.css" type="text/css">
+    <link rel="stylesheet" href="vendors/datepicker/daterangepicker.css" type="text/css">
+    <link rel="stylesheet" href="vendors/select2/css/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+</head>
+
+<body class="stretch-layout sticky-navigation shadow-layout">
+
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+            <div class="row app-block">
+                <div class="col-md-3 app-sidebar">
+                    <div class="card">
+                        <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+                            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+                            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+                            <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 app-content">
+                    <div class="card card-body app-content-body">
+                        <div class="app-lists">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Timeline</h6>
+                                        <div class="timeline">
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <a href="#">
+                                                        <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                            <img src="assets/media/image/user/women_avatar4.jpg" class="rounded-circle" alt="image">
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Martina Ash</a> shared a link
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border border-radius-1">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-2">
+                                                                    <img src="assets/media/image/photo6.jpg" class="w-100" alt="image">
+                                                                </div>
+                                                                <div class="col-10 p-3">
+                                                                    <h5 class="line-height-16">Connection title</h5>
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, voluptatibus.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-success-bright text-success rounded-circle">C</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Jonny Richie</a> shared a post
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border p-3 border-radius-1">
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid aperiam commodi culpa debitis deserunt enim itaque laborum minima neque nostrum pariatur perspiciatis, placeat quidem, ratione recusandae reiciendis sapiente, ut veritatis vitae. Beatae
+                                                            dolore hic odio! Esse officiis quidem voluptate.
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-info-bright text-info rounded-circle">K</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Jonny Richie</a> attached file
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border p-3 border-radius-1">
+                                                            <i class="fa fa-file-pdf-o mr-2"></i> filename12334.pdf
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                                        <i class="ti-image"></i>
+                                                    </span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Jonny Richie</a> shared files
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <div class="row row-xs">
+                                                        <div class="col-xl-3 col-lg-4 col-md-6">
+                                                            <figure>
+                                                                <img src="assets/media/image/portfolio-five.jpg" class="w-100 border-radius-1" alt="image">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6">
+                                                            <figure>
+                                                                <img src="assets/media/image/portfolio-one.jpg" class="w-100 border-radius-1" alt="image">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6">
+                                                            <figure>
+                                                                <img src="assets/media/image/portfolio-three.jpg" class="w-100 border-radius-1" alt="image">
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-youtube rounded-circle">Y</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between">
+                                                        <span>
+                                                       <a href="#">Jonny Richie</a> shared video
+                                                   </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, placeat.
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="embed-responsive embed-responsive-16by9 m-t-b-5">
+                                                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/l-epKcOA7RQ" allowfullscreen></iframe>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel">
+                                    <div class="card-body">
+                                        <h6 class="card-title">asdadasd</h6>
+                                        <div class="timeline">
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <a href="#">
+                                                        <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                            <img src="assets/media/image/user/women_avatar4.jpg" class="rounded-circle" alt="image">
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                            <a href="#">制作步骤 5</a>
+                                                        </span>
+                                                        <span class="text-muted font-weight-normal">2020/2/22</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border border-radius-1">
+                                                            <div class="row no-gutters">
+
+                                                                <div class="col-10 p-3">
+                                                                    <h5 class="line-height-16">Connection title</h5>
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, voluptatibus.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-success-bright text-success rounded-circle">C</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Jonny Richie</a> shared a post
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border p-3 border-radius-1">
+                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquid aperiam commodi culpa debitis deserunt enim itaque laborum minima neque nostrum pariatur perspiciatis, placeat quidem, ratione recusandae reiciendis sapiente, ut veritatis vitae. Beatae
+                                                            dolore hic odio! Esse officiis quidem voluptate.
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-info-bright text-info rounded-circle">K</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Jonny Richie</a> attached file
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <a href="#">
+                                                        <div class="mb-3 border p-3 border-radius-1">
+                                                            <i class="fa fa-file-pdf-o mr-2"></i> filename12334.pdf
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                                        <i class="ti-image"></i>
+                                                    </span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                        <span>
+                                                        <a href="#">Jonny Richie</a> shared files
+                                                    </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <div class="row row-xs">
+                                                        <div class="col-xl-3 col-lg-4 col-md-6">
+                                                            <figure>
+                                                                <img src="assets/media/image/portfolio-five.jpg" class="w-100 border-radius-1" alt="image">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6">
+                                                            <figure>
+                                                                <img src="assets/media/image/portfolio-one.jpg" class="w-100 border-radius-1" alt="image">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="col-xl-3 col-lg-4 col-md-6">
+                                                            <figure>
+                                                                <img src="assets/media/image/portfolio-three.jpg" class="w-100 border-radius-1" alt="image">
+                                                            </figure>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <span class="avatar-title bg-youtube rounded-circle">Y</span>
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between">
+                                                        <span>
+                                                       <a href="#">Jonny Richie</a> shared video
+                                                   </span>
+                                                        <span class="text-muted font-weight-normal">Tue 8:17pm</span>
+                                                    </h6>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, placeat.
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="embed-responsive embed-responsive-16by9 m-t-b-5">
+<!--                                                                https://www.bilibili.com/video/BV1Uo4y1R7d4-->
+                                                                <iframe class="embed-responsive-item" src="" allowfullscreen></iframe>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end::app-lists -->
+
+                        <!-- begin:app-detail -->
+                        <div class="card app-detail">
+                            <div class="card-header">
+                                <div class="app-detail-action-left">
+                                    <a class="app-detail-close-button" href="#">
+                                        <i data-feather="arrow-left" class="mr-3"></i>
+                                    </a>
+                                    <h5 class="mb-0">Draw design and presentation for customers. </h5>
+                                </div>
+                                <div class="app-detail-action-right">
+                                    <div>
+                                        <a href="#" class="btn btn-success" data-toggle="tooltip" title="2:44 AM">
+                                            <i data-feather="check" class="mr-2"></i> Completed
+                                        </a>
+                                        <span data-toggle="modal" data-target="#editTaskModal">
+                                        <a href="#" class="btn btn-outline-light ml-2" title="Edit Task"
+                                           data-toggle="tooltip">
+                                            <i data-feather="edit-3"></i>
+                                        </a>
+                                    </span>
+                                        <a href="#" class="btn btn-outline-light ml-2" data-toggle="tooltip" title="Delete Task">
+                                            <i data-feather="trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="app-detail-article">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center p-l-r-0 m-b-20">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-group">
+                                                <div class="avatar avatar-sm" title="Polly Everist" data-toggle="tooltip">
+                                                    <span class="avatar-title bg-primary rounded-circle">P</span>
+                                                </div>
+                                                <div class="avatar avatar-sm" title="Godwin Adanez" data-toggle="tooltip">
+                                                    <span class="avatar-title bg-success rounded-circle">G</span>
+                                                </div>
+                                                <figure class="avatar avatar-sm" title="Lisle Essam" data-toggle="tooltip">
+                                                    <img src="assets/media/image/user/women_avatar2.jpg" class="rounded-circle" alt="image">
+                                                </figure>
+                                                <figure class="avatar avatar-sm" title="Baxie Roseblade" data-toggle="tooltip">
+                                                    <img src="assets/media/image/user/man_avatar5.jpg" class="rounded-circle" alt="image">
+                                                </figure>
+                                                <figure class="avatar avatar-sm" title="Mella Mixter" data-toggle="tooltip">
+                                                    <img src="assets/media/image/user/women_avatar1.jpg" class="rounded-circle" alt="image">
+                                                </figure>
+                                            </div>
+                                        </div>
+                                        <div class="ml-auto">
+                                            <span class="badge bg-warning badge-pill mr-2">Theme Support</span>
+                                            <a href="#" data-toggle="tooltip" title="Files" class="mr-2">
+                                                <i class="fa fa-paperclip"></i>
+                                            </a>
+                                            <a href="#" class="mr-2">
+                                                <i class="fa fa-star font-size-16 text-warning"></i>
+                                            </a>
+                                            <span class="text-muted">4:14 AM</span>
+                                        </div>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur corporis incidunt labore modi numquam omnis pariatur possimus suscipit vitae voluptas?</p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aperiam asperiores error esse fugiat fugit laboriosam necessitatibus officia, placeat, quam quis reprehenderit similique soluta suscipit tempore! Consequuntur
+                                        eligendi hic in libero nostrum rem ut? At itaque laboriosam natus provident reprehenderit.</p>
+                                </div>
+                                <hr class="m-0">
+                                <div class="card-body">
+                                    <h6 class="mb-3 font-size-11 text-uppercase">Files</h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="small">
+                                            <a href="#">
+                                                <i data-feather="paperclip" class="mr-1 width-15 height-15"></i> uikit-design.psd
+                                            </a>
+                                        </li>
+                                        <li class="small">
+                                            <a href="#">
+                                                <i data-feather="paperclip" class="mr-1 width-15 height-15"></i> uikit-design.sketch
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr class="m-0">
+                                <div class="card-body">
+                                    <h6 class="mb-3 font-size-11 text-uppercase">Comment</h6>
+                                    <div class="reply-email-quill-editor mb-3"></div>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="reply-email-quill-toolbar">
+                                            <span class="ql-formats mr-0">
+                                          <button class="ql-bold"></button>
+                                          <button class="ql-italic"></button>
+                                          <button class="ql-underline"></button>
+                                          <button class="ql-link"></button>
+                                          <button class="ql-image"></button>
+                                        </span>
+                                        </div>
+                                        <button class="btn btn-primary">
+                                        <i data-feather="send" class="mr-2"></i>
+                                        Send
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+    </div>
+</body>
+<script src="vendors/bundle.js"></script>
+<script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>
+<!--<script src="assets/js/examples/tagsinput.js"></script>-->
+<!--<script src="vendors/quill/quill.js"></script>-->
+<!--<script src="vendors/clockpicker/bootstrap-clockpicker.min.js"></script>-->
+<!--<script src="assets/js/examples/clockpicker.js"></script>-->
+<!--<script src="vendors/select2/js/select2.min.js"></script>-->
+<!--<script src="assets/js/examples/select2.js"></script>-->
+<!--<script src="vendors/datepicker/daterangepicker.js"></script>-->
+<!--<script src="assets/js/examples/datepicker.js"></script>-->
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script src="assets/js/app.js"></script>
+
+<script>
+    // new Quill('.reply-email-quill-editor', {
+    //     modules: {
+    //         toolbar: ".reply-email-quill-toolbar"
+    //     },
+    //     placeholder: "Type something... ",
+    //     theme: "snow"
+    // });
+
+    $(function() {
+        $(document).on('click', '.app-block .app-content .app-action .action-left input[type="checkbox"]', function() {
+            $('.app-lists ul li input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+            if ($(this).prop('checked')) {
+                $('.app-lists ul li input[type="checkbox"]').closest('li').addClass('active');
+            } else {
+                $('.app-lists ul li input[type="checkbox"]').closest('li').removeClass('active');
+            }
+        });
+
+        $(document).on('click', '.app-lists ul li input[type="checkbox"]', function() {
+            if ($(this).prop('checked')) {
+                $(this).closest('li').addClass('active');
+            } else {
+                $(this).closest('li').removeClass('active');
+            }
+        });
+
+        $(document).on('click', '.app-block .app-content .app-content-body .app-lists ul.list-group li.list-group-item', function(e) {
+            if (!$(e.target).is('.custom-control, .custom-control *, a, a *')) {
+                $('.app-detail').addClass('show').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                    $('.app-block .app-content .app-content-body .app-detail .app-detail-article').niceScroll().resize();
+                });
+            }
+        });
+
+        $(document).on('click', 'a.app-detail-close-button', function() {
+            $('.app-detail').removeClass('show');
+            return false;
+        });
+
+        $(document).on('click', '.app-sidebar-menu-button', function() {
+            $('.app-block .app-sidebar, .app-content-overlay').addClass('show');
+            // $('.app-block .app-sidebar .app-sidebar-menu').niceScroll().resize();
+            return false;
+        });
+
+        $(document).on('click', '.app-content-overlay', function() {
+            $('.app-block .app-sidebar, .app-content-overlay').removeClass('show');
+            return false;
+        });
+
+        $('.app-block .app-content .app-content-body .app-lists ul').sortable({
+            axis: "y",
+            cursor: "move",
+            handle: '.app-sortable-handle'
+        }).disableSelection();
+    });
+</script>
+</html>

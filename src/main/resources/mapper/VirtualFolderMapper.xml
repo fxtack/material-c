@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxtack.materialc.mapper.VirtualFolderMapper">
+    <resultMap id="BaseResultMap" type="com.fxtack.materialc.entity.VirtualFolder">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="folder_name" jdbcType="VARCHAR" property="folderName"/>
+        <result column="folder_create_date" jdbcType="TIMESTAMP" property="folderCreateDate"/>
+        <result column="folder_file_count" jdbcType="INTEGER" property="folderFileCount"/>
+        <result column="folder_file_size" jdbcType="VARCHAR" property="folderFileSize"/>
+        <result column="folder_absolute" jdbcType="VARCHAR" property="folderAbsolute"/>
+        <result column="folder_remark" jdbcType="VARCHAR" property="folderRemark"/>
+        <result column="inner_folder_id" jdbcType="VARCHAR" property="innerFolderId"/>
+        <result column="absolute_folder_path_id" jdbcType="VARCHAR" property="absoluteFolderPathId"/>
+    </resultMap>
+    <sql id="column_list">
+        id, folder_name, folder_create_date, folder_file_count,
+        folder_file_size, folder_absolute, folder_remark, inner_folder_id,
+        absolute_folder_path_id
+    </sql>
+    <select id="selectByAbsolutePath" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="column_list"></include>
+        from virtual_folder
+        where folder_absolute = #{folderAbsolute, jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="column_list"></include>
+        from virtual_folder
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="column_list"></include>
+        from virtual_folder
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.fxtack.materialc.entity.VirtualFolder">
+        insert into virtual_folder (
+            <include refid="column_list"></include>
+        ) values (
+            #{id,jdbcType=INTEGER}, #{folderName,jdbcType=VARCHAR}, #{folderCreateDate,jdbcType=TIMESTAMP},
+            #{folderFileCount,jdbcType=INTEGER}, #{folderFileSize,jdbcType=VARCHAR}, #{folderAbsolute,jdbcType=VARCHAR},
+            #{folderRemark, jdbcType=VARCHAR}, #{innerFolderId, jdbcType=VARCHAR}, #{absoluteFolderPathId, jdbcType=VARCHAR}
+        )
+    </insert>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from virtual_folder
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fxtack.materialc.entity.VirtualFolder">
+        update virtual_folder
+        <set>
+            <if test="folderName != null">
+                folder_name = #{folderName,jdbcType=VARCHAR},
+            </if>
+            <if test="folderCreateDate != null">
+                folder_create_date = #{folderCreate, jdbcType=TIMESTAMP},
+            </if>
+            <if test="folderFileCount != null">
+                folder_file_count = #{folderFileCount, jdbcType=VARCHAR},
+            </if>
+            <if test="folderFileSize != null">
+                folder_file_size = #{folderFileSize, jdbcType=VARCHAR},
+            </if>
+            <if test="folderAbsolute != null">
+                folder_absolute = #{folderAbsolute, jdbcType=VARCHAR},
+            </if>
+            <if test="folderRemark != null">
+                folder_remark = #{folderRemark, jdbcType=VARCHAR},
+            </if>
+            <if test="innerFolderId != null">
+                inner_folder_id = #{innerFolderId, jdbcType=VARCHAR},
+            </if>
+            <if test="absoluteFolderPathId != null">
+                absolute_folder_path_id = #{absoluteFolderPathId, jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fxtack.materialc.entity.VirtualFolder">
+        update virtual_folder
+        set
+        folder_name = #{folderName,jdbcType=VARCHAR},
+        folder_create_date = #{folderCreateDate,jdbcType=TIMESTAMP},
+        folder_file_count = #{folderFileCount,jdbcType=INTEGER},
+        folder_file_size = #{folderFileSize,jdbcType=VARCHAR},
+        folder_absolute = #{folderAbsolute,jdbcType=VARCHAR},
+        folder_remark = #{folderRemark,jdbcType=VARCHAR},
+        inner_folder_id = #{innerFolderId, jdbcType=VARCHAR},
+        absolute_folder_path_id = #{absoluteFolderPathId, jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

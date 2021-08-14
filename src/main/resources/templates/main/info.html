@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+</head>
+
+<body class="stretch-layout sticky-navigation shadow-layout">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+                <div class="row app-block">
+                    <div class="col-md-4 app-sidebar">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <figure class="avatar avatar-lg m-b-20">
+                                    <span id="user_info_head" class="avatar-title bg-warning rounded-circle">A</span>
+                                </figure>
+                                <h5 id="user_name" name="user_name" class="mb-1">Achar</h5>
+                                <p id="user_job" name="user_job" class="text-muted small">administrator</p>
+                                <p id="user_autograph"></p>
+                                <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#infoModal">
+                                    <i class="mr-2 fa fa-pencil"></i> 编辑
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 app-content">
+                        <div class="card app-content-body">
+                            <div class="card-body">
+                                <h6 class="card-title d-flex justify-content-between align-items-center">
+                                    信息
+                                    <button class="btn btn-outline-secondary btn-sm" data-target="#otherInfoModal" data-toggle="modal">
+                                        <i class="mr-2 fa fa-pencil"></i> 编辑
+                                    </button>
+                                </h6>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">姓名:</div>
+                                    <div name="user_name" class="col-6">Achar</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">性别:</div>
+                                    <div id="user_sex" class="col-6">男</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">权限:</div>
+                                    <div id="user_role" class="col-6">administrator</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">职位:</div>
+                                    <div name="user_job" class="col-6">Web Designer</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">城市:</div>
+                                    <div id="user_area" class="col-6">New York, USA</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">地址:</div>
+                                    <div id="user_address" class="col-6">228 Park Ave Str.</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">联系方式:</div>
+                                    <div id="user_contact" class="col-6">+1-202-555-0134</div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">邮箱:</div>
+                                    <div id="user_email" class="col-6">johndue@gmail.com</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">编辑信息</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" >名称</label>
+                            <div class="col-sm-9">
+                                <input id="info_name" type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3">说明</label>
+                            <div class="col-sm-9">
+                                <textarea id="info_autograph" class="form-control" rows="9" style="height:150px" text="选中条目的remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button id="info_submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="otherInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">编辑信息</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">姓名</label>
+                            <div class="col-sm-9">
+                                <input id="other_info_name" type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">性别</label>
+                            <div class="col-sm-9">
+                                <input id="other_info_sex" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">城市</label>
+                            <div class="col-sm-9">
+                                <input id="other_info_area" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">地址</label>
+                            <div class="col-sm-9">
+                                <input id="other_info_address" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">联系方式</label>
+                            <div class="col-sm-9">
+                                <input id="other_info_contact" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">邮箱</label>
+                            <div class="col-sm-9">
+                                <input id="other_info_email" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button id="other_info_submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendors/bundle.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url:"/getInfo",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data) {
+                $("[name = 'user_name']").html(data.data.userName);
+                $("#other_info_name").val(data.data.userName);
+                $("#info_name").val(data.data.userName);
+
+                $("[name = 'user_job']").html(data.data.job);
+                $("#other_info_job").val(data.data.job);
+
+                $("#user_autograph").html(data.data.userAutograph);
+                $("#info_autograph").val(data.data.userAutograph);
+
+                $("#user_sex").html(data.data.userSex == 1 ? "男" : "女");
+                $("#other_info_sex").val(data.data.userSex == 1 ? "男" : "女");
+
+                $("#user_role").html(data.data.roles);
+
+                $("#user_area").html(data.data.area);
+                $("#other_info_area").val(data.data.area);
+
+                $("#user_address").html(data.data.userAddress);
+                $("#other_info_address").val(data.data.userAddress);
+
+                $("#user_contact").html(data.data.userContact);
+                $("#other_info_contact").val(data.data.userContact);
+
+                $("#user_email").html(data.data.userEmail);
+                $("#other_info_email").val(data.data.userEmail);
+            },
+            error:function(data) {
+                swal("请求失败,请稍后再试", {
+                    icon: "warning",
+                });
+            }
+        });
+
+        $("#other_info_submit").click(function () {
+            if (
+                $("#other_info_name").val() == null ||
+                $("#other_info_sex").val()  == null ||
+                $("#other_info_area").val() == null ||
+                $("#other_info_address").val() == null ||
+                $("#other_info_contact").val() == null ||
+                $("#other_info_email").val() == null ) {
+                swal("请填填写完整信息",{icon: "warning"});
+                return;
+            }
+            $.ajax({
+                url: "/updateOtherInfo",
+                type: "post",
+                data: {
+                    name: $("#other_info_name").val(),
+                    sex: $("#other_info_sex").val(),
+                    area: $("#other_info_area").val(),
+                    address: $("#other_info_address").val(),
+                    contact: $("#other_info_contact").val(),
+                    email: $("#other_info_email").val(),
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.flag) {
+                        swal("修改成功", {icon: "success"}).then(e=>{location.reload()});
+                    }else {
+                        swal(data.msg, {icon: "warning"});
+                    }
+                },
+                error: function () {
+                    swal("请求失败, 请稍后再试", {icon: "warning"});
+                }
+            });
+            $("#otherInfoModal").modal('hide');
+        });
+
+        $("#info_submit").click(function () {
+            if(
+                $("#info_name").val() == null ||
+                $("#info_autograph").val() == null
+            ) {
+                swal("请填写完整信息", {icon: "warning"});
+            }
+            $.ajax({
+                url: "/updateInfo",
+                type: "post",
+                data: {
+                    name :$("#info_name").val(),
+                    autograph: $("#info_autograph").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if(data.flag) {
+                        swal("修改成功", {icon: "success"}).then(e=>location.reload());
+                    }else {
+                        swal(data.msg, {icon: "warning"});
+                    }
+                },
+                error: function () {
+                    swal("请求失败, 请稍后再试", {icon: "warning"});
+                }
+            });
+            $("#infoModal").modal('hide');
+        });
+
+    });
+</script>
+</html>

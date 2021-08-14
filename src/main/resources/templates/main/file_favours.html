@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/commons_file::head('Home')}">
+<body class="shadow-layout">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+            <div class="page-header">
+                <h4 id="folder_title"></h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:setFolderData();">收藏的常用素材或重要素材</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="row app-block">
+                <div class="col-md-8 app-content">
+                    <div class="app-content-overlay"></div>
+                    <div class="app-action">
+                        <div class="action-left">
+                            <ul class="list-inline">
+
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        排序
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:sortByDate(contentData);">日期</a>
+                                        <a class="dropdown-item" href="javascript:sortByName(contentData)">名称</a>
+                                        <a class="dropdown-item" href="javascript:sortBySize(contentData)">大小</a>
+                                        <hr>
+                                        <a class="dropdown-item" href="javascript:sortReverse(contentData)">逆序</a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        查看
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:simplyViewInit(contentData)">缩略图</a>
+                                        <a class="dropdown-item" href="javascript:tableViewInit(contentData)">详细信息</a>
+                                        <a class="dropdown-item" href="javascript:imageViewInit(contentData)">图片视图</a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a id="select_multiple" href="javascript:multipleSelect();" class="btn btn-outline-light">
+                                        多选
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="action-right">
+<!--                            <form class="d-flex mr-3" method="get" action="search">-->
+                                <a href="#" class="app-sidebar-menu-button btn btn-outline-light">
+                                    <i data-feather="menu"></i>
+                                </a>
+                                <div class="input-group">
+                                    <input type="text" id="search_input" class="form-control" placeholder="搜索素材" aria-describedby="button-addon1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-light" id="search_clear">
+                                            <i class="ti-close"></i>
+                                        </button>
+                                        <button class="btn btn-outline-light" id="search_button">
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+<!--                            </form>-->
+                        </div>
+                    </div>
+                    <div class="card app-content-body">
+                        <div id="content_body" class="card-body">
+<!--                            1212-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 app-content sticky">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title" id="file_path"></div>
+                            <hr>
+                            <div class="app-file-list">
+                                <a id="content_modal" href="javascript:void(0);">
+                                    <div id="file_view" class="app-file-icon">
+                                        <i id="file_icon" class="fa fa-folder-open text-warning"></i>
+                                    </div>
+                                </a>
+                                <div id="image_view" class="app-file" style="display: none">
+                                    <a id="file_content_detail" class="image-popup" href="javascript:void(0);">
+                                        <img id="file_content" class="card-img-top" alt="image" src="">
+                                    </a>
+                                </div>
+                                <div class="p-3 small">
+                                    <div id="file_name" text="显示栏文件夹名称"></div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-small">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">类型</th>
+                                        <th scope="col">大小</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">创建时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td id="file_type">文件夹</td>
+                                        <td id="file_size">尚未统计</td>
+                                        <td id="file_wh"></td>
+                                        <td id="file_create_date">文件夹创建时间</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-title">
+                                备注
+                            </div>
+                            <hr>
+                            <p class="card-text" text="文件夹备注" id="remark"></p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item mb-0">
+                                    <a id="operation_btn" href="javascript:void(0);" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        操作
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a id="file_download" class="dropdown-item disabled" href="Javascript:downloadAction();" download="">下载</a>
+                                        <a id="file_favour" class="dropdown-item disabled" href="javascript:void(0);">收藏</a>
+                                        <a id="file_remark" class="dropdown-item" href="#" data-target="#newRemarkModal" data-toggle="modal">编辑备注</a>
+                                        <a id="file_rename" class="dropdown-item" href="javascript:void(0);">重命名</a>
+                                        <a id="file_copy_to" class="dropdown-item" href="#">复制到</a>
+                                        <a id="file_move_to" class="dropdown-item" href="#">移动到</a>
+                                        <a id="file_delete" class="dropdown-item disabled" href="javascript:void(0);">删除</a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a id="favour_ico" class="add-star mr-3" style="display: none">
+                                        <i class="fa fa-star font-size-16 text-warning"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+        <div class="modal fade" id="newRemarkModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">编辑备注</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <textarea id="remark_edit" class="form-control" rows="9" style="height:150px" text="选中条目的remark"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <button id="remark_verify" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="testModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">内容预览</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <center>
+                                    <audio id="content_audio" width="100%" name="content_detail" src="" controls="controls">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <video id="content_video" name="content_detail" width="100%" src="" controls="controls">
+                                        Your browser does not support the audio element.
+                                    </video>
+                                    <div id="content_text"></div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<div th:replace="~{commons/commons_file::js_import}"></div>
+<style>
+    a.disabled {
+        pointer-events: none;
+        filter: alpha(opacity=50); /*IE滤镜，透明度50%*/
+        -moz-opacity: 0.5; /*Firefox私有，透明度50%*/
+        opacity: 0.5; /*其他，透明度50%*/
+    }
+</style>
+<!--<script th:replace="~{commons/commons_file::file_upload}"></script>-->
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    // 界面内容数据
+    let contentData;
+
+    // 虚拟文件夹的绝对路径
+    let virtual_folder_absolute = '';
+
+    // 界面状态值
+    let view_stat = $.cookie('view_stat') == null ? '1' : $.cookie('view_stat');
+
+    // 判断是一个文件还是一个文件夹，文件夹为 false，文件为 true
+    let is_file = false;
+
+    // 选中文件或文件夹的 id
+    let select_id = 1;
+    let select_href = "";
+    let select_name = "";
+
+    let is_multiple_select = false;
+
+    let multiple_select_id_list = [];
+    let download_list = [];
+
+    $(document).ready(function () {
+        initContent();
+        setFolderData();
+    });
+
+    function initContent() {
+        $.ajax({
+            url:"/getFavourFile",
+            type:"post",
+            data:{
+                pathId:1
+            },
+            dataType: "json",
+            success: function (data) {
+                // swal("成功", {
+                //     icon: "success",
+                // });
+                contentData = data.data;
+                switch (view_stat) {
+                    case '1':
+                        simplyViewInit(contentData);
+                        break;
+                    case '2':
+                        tableViewInit(contentData);
+                        break;
+                    case '3':
+                        imageViewInit(contentData);
+                        break;
+                    default:
+                        alert("fale")
+                }
+                $("[name='multiple_select']").css("display", "none");
+                is_multiple_select = false;
+                multiple_select_id_list = [];
+            },
+            error:function (data) {
+                swal(data.msg, {
+                    icon: "error",
+                });
+            }
+        })
+    }
+
+    function imageViewInit(list) {
+        $.cookie('view_stat', '3', { expires: 1 });
+        is_multiple_select = false;
+        multiple_select_id_list = [];
+        $("#content_body").html("<div class=\"card-columns\" id=\"image_body\">\n" + "</div>");
+        let innerHtml = "";
+        for(let i = 0 ; i < list.length ; i++) {
+            innerHtml += setImageViewContent({
+                id:list[i].id,
+                path:list[i].picturePath,
+                suffix:list[i].pictureSuffix,
+                name:list[i].pictureName,
+                size:list[i].pictureSize,
+                type:list[i].pictureType
+            });
+        }
+        $("#image_body").html(innerHtml);
+        setClick();
+        view_stat = '3';
+    }
+
+    function setImageViewContent(a) {
+        let s =
+            "<div class=\"card app-file-list\">\n" +
+            "    <div class=\"app-file\" name=\"material_file\" id=\""+a.id+"\" style=\"cursor:pointer; display: "+(a.type.substring(0,5) == 'image' ? 'block':'none')+";\">\n" +
+            "        <img src=\""+a.path+"\" class=\"card-img-top\" alt=\"image\">\n" +
+            "    </div>\n" +
+            "    <div id=\""+a.id+"\" class=\"app-file-icon\" style=\"cursor:pointer; display: "+(a.type.substring(0,5) == 'image' ? 'none':'block')+";\" name=\"material_file\">" +
+            "        <i name='"+a.suffix+"' id='"+"suf"+a.id+"' class=\""+getFileTypeClass(a.suffix)+"\"></i>\n" +
+            "    </div>\n" +
+            "    <div class=\"p-2 small\">\n" +
+            "<div class=\"position-absolute bottom-0 right-0 mr-3\" style='font-size: 1.5em;'>" +
+            (a.type != '文件夹' ? "<i name='multiple_select' id='i"+a.id+"' class='fa' style='position: relative; bottom: 10px;'></i>" :'')+
+            "</div>"+
+            "        <div>"+a.name+a.suffix+"</div>\n" +
+            "        <div class=\"text-muted\">"+a.size+"</div>\n" +
+            "    </div>\n" +
+            "</div>\n";
+        return s;
+    }
+
+    function simplyViewInit(list) {
+        $.cookie('view_stat', '1', { expires: 1 });
+        is_multiple_select = false;
+        multiple_select_id_list = [];
+        $("#content_body").html("<div class=\"row\" id=\"simply_body\">\n" + "</div>");
+        let innerHtml = "";
+        for(let i = 0 ; i < list.length ; i++) {
+            innerHtml += setSimplyViewContent({
+                id:list[i].id,
+                type:list[i].pictureType,
+                name:list[i].pictureName,
+                size:list[i].pictureSize,
+                suffix:list[i].pictureSuffix
+            });
+        }
+        $("#simply_body").html(innerHtml);
+        setClick();
+        view_stat = '1';
+    }
+
+    function setSimplyViewContent(a) {
+        let s =
+            "<div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-12\">" +
+            "<div class=\"card app-file-list\">" +
+            "<div id=\""+a.id+"\" class=\"app-file-icon\" style=\"cursor:pointer;\" name=\"material_file\">\n" +
+            "    <i name='"+a.suffix+"' id='"+"suf"+a.id+"' class=\""+getFileTypeClass(a.suffix)+"\"></i>\n" +
+            "</div>\n" +
+            "<div class=\"p-2 small\">\n" +
+            "    <div>"+a.name + a.suffix+"</div>\n" +
+            "<div class=\"position-absolute top-1 right-0 mr-3\" style='font-size: 1.5em;'>" +
+            (a.type != '文件夹' ? "<i name='multiple_select' id='i"+a.id+"' class='fa' style='position: relative; bottom: 10px;'></i>" :'') +
+            "</div>"+
+            "    <div class=\"text-muted\">"+a.size+"</div>\n" +
+            "</div>"+
+            "</div>" +
+            "</div>";
+        return s;
+    }
+
+    function tableViewInit(list) {
+        $.cookie('view_stat', '2', { expires: 1 });
+        is_multiple_select = false;
+        multiple_select_id_list = [];
+        $("#content_body").html("<div class=\"table-responsive\">\n" +
+            "                        <table class=\"table table-hover\">\n" +
+            "                            <thead class=\"thead-light\">\n" +
+            "                            <tr>\n" +
+            "                                <th scope=\"col\">#</th>\n" +
+            "                                <th scope=\"col\">名称</th>\n" +
+            "                                <th scope=\"col\">类型</th>\n" +
+            "                                <th scope=\"col\">大小</th>\n" +
+            "                                <th scope=\"col\"></th>\n" +
+            "                                <th scope=\"col\">创建日期</th>\n" +
+            "                                <th scope=\"col\">备注</th>\n" +
+            "                                <th scope=\"col\"></th>\n" +
+            "                            </tr>\n" +
+            "                            </thead>\n" +
+            "                            <tbody id=\"table_body\">\n" +
+            "                            </tbody>\n" +
+            "                        </table>\n" +
+            "                    </div>");
+        let innerHtml = "";
+        for(let i = 0 ; i < list.length ; i++) {
+            innerHtml+=setTableViewContent({
+                id:list[i].id,
+                index:i,
+                name:list[i].pictureName,
+                suffix:list[i].pictureSuffix,
+                size:list[i].pictureSize,
+                wh:list[i].pictureType.substring(0,5) == 'image' ? list[i].pictureWh+' xp' : '',
+                date:list[i].pictureCreateDate.substring(0,10),
+                remark:list[i].remark.length >= 4 || list[i].remark == null ? list[i].remark.substring(0,4)+'...' : list[i].remark,
+                favour:list[i].isFavour == 1 ? true : false,
+                type:list[i].pictureType
+            });
+        }
+        $("#table_body").html(innerHtml);
+        setClick();
+        view_stat = '2';
+    }
+    function setTableViewContent(a) {
+        let s =
+            "<tr style=\"cursor:pointer\" id=\""+a.id+"\" name=\"material_file\">\n" +
+            "<th name='"+a.suffix+"' id='"+"suf"+a.id+"' scope=\"row\">" +
+            (a.type != '文件夹' ? "<span name='table_index'>"+(a.index+1)+"</span><i name='multiple_select' id='i"+a.id+"' class='fa'></i>\n" : '<span>'+(a.index+1)+'</span>') +
+            "</th>\n" +
+            "<td>"+a.name+"</td>\n" +
+            "<td>"+a.suffix+"</td>\n" +
+            "<td>"+a.size+"</td>\n" +
+            "<td>"+a.wh+"</td>\n" +
+            "<td>"+a.date+"</td>\n" +
+            "<td>"+a.remark+"</td>\n" +
+            "<td>\n" +
+            " <a class=\"add-star mr-3\" style=\"display: "+(a.favour ? 'block' : 'none')+"\">\n" +
+            "  <i class=\"fa fa-star font-size-16 text-warning\"></i>\n" +
+            " </a>\n" +
+            "</td>\n" +
+            "</tr>"
+        return s;
+    }
+
+    function sortByDate(list) {
+        list.sort((a,b)=> {
+            if(a.pictureCreateDate>b.pictureCreateDate) {
+                return 1;
+            }else if(a.pictureCreateDate<b.pictureCreateDate) {
+                return -1;
+            }else {
+                return 0;
+            }
+        });
+        switch (view_stat) {
+            case '1':
+                simplyViewInit(contentData);
+                break;
+            case '2':
+                tableViewInit(contentData)
+                break;
+            case '3':
+                imageViewInit(contentData)
+                break;
+        }
+    }
+
+    function sortByName(list) {
+        list.sort((a,b)=> {
+            if(a.pictureName>b.pictureName) {
+                return 1;
+            }else if(a.pictureName<b.pictureName) {
+                return -1;
+            }else {
+                return 0;
+            }
+        });
+        switch (view_stat) {
+            case '1':
+                simplyViewInit(contentData);
+                break;
+            case '2':
+                tableViewInit(contentData)
+                break;
+            case '3':
+                imageViewInit(contentData)
+                break;
+        }
+    }
+
+    function sortBySize(list) {
+        list.sort((a,b)=> {
+            let suffix = new Array(a.pictureSize.substring(a.pictureSize.lastIndexOf(' ')+1),b.pictureSize.substring(b.pictureSize.lastIndexOf(' ')+1));
+            if(suffix[0] == suffix[1]) {
+                return Number(a.pictureSize.substring(0,a.pictureSize.lastIndexOf(' '))) > Number(b.pictureSize.substring(0,b.pictureSize.lastIndexOf(' '))) ?  1 : -1;
+            }else {
+                let r = new Array(2);
+                for(let i = 0 ; i < 2 ; i++) {
+                    switch (suffix[i]){
+                        case 'B':
+                            r[i] = 0;
+                            break;
+                        case 'KB':
+                            r[i] = 1;
+                            break;
+                        case 'MB':
+                            r[i] = 2;
+                            break;
+                        case 'GB':
+                            r[i] = 3;
+                            break;
+                        case 'TB':
+                            r[i] = 4;
+                            break;
+                        default:
+                            r[i] = 5;
+                    }
+                }
+                return r[0] >= r[1] ? 1 : -1;
+            }
+        });
+        switch (view_stat) {
+            case '1':
+                simplyViewInit(contentData);
+                break;
+            case '2':
+                tableViewInit(contentData)
+                break;
+            case '3':
+                imageViewInit(contentData)
+                break;
+        }
+    }
+
+    function sortReverse(list) {
+        list.reverse();
+        switch (view_stat) {
+            case '1':
+                simplyViewInit(contentData);
+                break;
+            case '2':
+                tableViewInit(contentData)
+                break;
+            case '3':
+                imageViewInit(contentData)
+                break;
+        }
+    }
+
+    // 点击控件 控制
+    function setClick() {
+        $("[name='material_file']").click(function clickAction() {
+            let this_ = this;
+            if(is_multiple_select) {
+                if($("#i"+this.id).hasClass("fa-circle-o")) {
+                    $("#i"+this.id).removeClass("fa-circle-o").addClass("text-success fa-check");
+                    multiple_select_id_list.push(this.id);
+                }else {
+                    $("#i"+this.id).removeClass("text-success fa-check").addClass("fa-circle-o");
+                    multiple_select_id_list.splice(multiple_select_id_list.indexOf(this.id),1);
+                }
+            }
+            $.ajax({
+                url : "/getContent",
+                type : "post",
+                data : {
+                    id : this.id,
+                },
+                dataType : "json",
+                success : function(data) {
+                    if (data.flag == true) {
+                        $("#file_path").html(virtual_folder_absolute+data.data.pictureName+data.data.pictureSuffix);  // 素材内容的绝对路径
+                        $("#file_content_detail").attr("href",data.data.picturePath);
+                        $("#file_content").attr("src",data.data.picturePath);                                       // 素材内容显示
+                        $("#file_name").html(data.data.pictureName);                                                // 素材名字
+                        $("#file_type").html(data.data.pictureSuffix);                                              // 素材后缀
+                        $("#file_size").html(data.data.pictureSize);                                                // 素材 (图片) 大小
+                        $("#file_wh").html(data.data.pictureWh != null ? data.data.pictureWh + ' xp' : '');
+                        $("#file_create_date").html(data.data.pictureCreateDate.substring(0,10));                   // 素材创建日期
+                        $("#remark").html(data.data.remark);                                                        // 备注
+                        if(is_multiple_select) {
+                            if(!$("#i"+this_.id).hasClass("fa-circle-o")) {
+                                download_list.push({id: data.data.id, href: data.data.picturePath, name: data.data.pictureName+data.data.pictureSuffix});
+                            }else {
+                                download_list = download_list.filter(e=>{return e.id!=this_.id});
+                            }
+                            console.log(download_list);
+                        }
+                        select_href = data.data.picturePath;
+                        select_name = data.data.pictureName+data.data.pictureSuffix;
+                        $("#remark_edit").val(data.data.remark);
+                        $("#operation_btn").css("display", "block");
+                        if(is_multiple_select) {
+                            setOperate({
+                                canDownload : true,
+                                canFavour : true,
+                                canRemark : false,
+                                canRename : false,
+                                canCopyTo : true,
+                                canMoveTo : true,
+                                canDelete : true
+                            });
+                        }else {
+                            setOperate({
+                                canDownload : true,
+                                canFavour : true
+                            });
+                        }
+                        if(data.data.pictureType.substring(0,5) == 'image') {
+                            $("#file_view").css("display",'none');
+                            $("#image_view").css("display","inline");
+                        }else {
+                            $("#image_view").css("display", "none");
+                            $("#file_view").css("display", "block");
+                            $("#file_icon").removeClass();
+                            $("#file_icon").addClass(getFileTypeClass(data.data.pictureSuffix));
+                            $("#content_audio").attr("src",data.data.picturePath);
+                            $("#content_video").attr("src",data.data.picturePath);
+                            $("#content_text").html("<embed  src='"+data.data.picturePath+"' width='100%' height='500xp' type=\"text/plain;charset=GBK\">");
+                                // .attr("data",data.data.picturePath);
+                        }
+                        if(data.data.isFavour == 1) {
+                            $("#favour_ico").css("display", 'block');
+                            $("#file_favour").html("取消收藏");
+                        }else {
+                            $("#favour_ico").css("display", 'none');
+                            $("#file_favour").html("收藏");
+                        }
+                        select_id = data.data.id;                                                                       // 选中的 id
+                        is_file = true;                                                                                 // 选中的选项是否是素材文件
+                    } else {
+                        swal("请求失败,请稍后再试", {
+                            icon: "warning",
+                        });
+                    }
+                },
+                error: function () {
+                    swal("请求失败,请稍后再试", {
+                        icon: "warning",
+                    });
+                }
+            });
+        });
+    }
+
+    function setFolderData() {
+        // virtual_file_absolute = data.data.folderAbsolute + data.data.folderName+'/';
+        $("#file_path").html("收藏素材");
+        $("#file_name").html("收藏素材");
+        $("#file_type").html("文件夹");
+        $("#file_size").html("尚未统计");
+        $("#file_wh").html("#");
+        $("#file_create_date").html("#");
+        $("#remark").html("用于汇总收藏的文件与素材");
+        // $("#remark_edit").val(data.data.folderRemark);
+        $("#folder_title").html("收藏素材");
+        $("#image_view").css("display", "none");
+        $("#file_view").css("display", "block");
+        $("#favour_ico").css("display", 'none');
+        $("#file_icon").removeClass();
+        $("#file_icon").addClass(getFileTypeClass(".folder"));
+        is_file = false;
+        $("#operation_btn").css("display", "none");
+    }
+
+    // 刷新操作面板内容控制
+    function flushOperate() {
+        if(is_file) {
+            $.ajax({
+                url : "/getContent",
+                type : "post",
+                data : {
+                    id : select_id,
+                },
+                dataType : "json",
+                success : function(data) {
+                    if (data.flag == true) {
+                        $("#file_path").html(virtual_folder_absolute+data.data.pictureName+data.data.pictureSuffix);  // 素材内容的绝对路径
+                        $("#file_content_detail").attr("href",data.data.picturePath);
+                        $("#file_content").attr("src",data.data.picturePath);                                       // 素材内容显示
+                        $("#file_name").html(data.data.pictureName);                                                // 素材名字
+                        $("#file_type").html(data.data.pictureSuffix);                                              // 素材后缀
+                        $("#file_size").html(data.data.pictureSize);                                                // 素材 (图片) 大小
+                        $("#file_wh").html(data.data.pictureWh != null ? data.data.pictureWh + ' xp' : '');
+                        $("#file_create_date").html(data.data.pictureCreateDate.substring(0,10));                   // 素材创建日期
+                        $("#remark").html(data.data.remark);                                                        // 备注
+                        select_href = data.data.picturePath;
+                        select_name = data.data.pictureName+data.data.pictureSuffix;
+                        $("#remark_edit").val(data.data.remark);                                                    // 备注编辑栏写入默认备注内容
+                        setOperate({
+                            canDownload : true,
+                            canFavour : true
+                        });
+                        if(data.data.pictureType.substring(0,5) == 'image') {
+                            $("#file_view").css("display",'none');
+                            $("#image_view").css("display","inline");
+                        }else {
+                            $("#image_view").css("display", "none");
+                            $("#file_view").css("display", "block");
+                            $("#file_icon").removeClass();
+                            $("#file_icon").addClass(getFileTypeClass(data.data.pictureSuffix));
+                        }
+                        if(data.data.isFavour == 1) {
+                            $("#favour_ico").css("display", 'block');
+                            $("#file_favour").html("取消收藏");
+                        }else {
+                            $("#favour_ico").css("display", 'none');
+                            $("#file_favour").html("收藏");
+                        }
+                        select_id = data.data.id;                                                                       // 选中的 id
+                        is_file = true;                                                                                 // 选中的选项是否是素材文件
+                    } else {
+                        swal("请求失败,请稍后再试", {
+                            icon: "warning",
+                        })
+                    }
+                },
+                error: function () {
+                    swal("请求失败,请稍后再试", {
+                        icon: "warning",
+                    });
+                }
+            });
+        }else {
+            setFolderData();
+        }
+    }
+    $("#search_clear").click(function () {
+        if($("#search_input").val() != null && $("#search_input").val().trim() != "") {
+            $("#search_input").val("");
+            initContent();
+            switch (view_stat) {
+                case '1':
+                    simplyViewInit(contentData);
+                    break;
+                case '2':
+                    tableViewInit(contentData)
+                    break;
+                case '3':
+                    imageViewInit(contentData)
+                    break;
+            }
+        }
+    });
+
+    function multipleSelect() {
+        if(!is_multiple_select) {
+            is_multiple_select = true;
+            multiple_select_id_list = [];
+            download_list = [];
+            $("[name='table_index']").css("display", "none");
+            $("[name='multiple_select']").css("display", "inline");
+            $("[name='multiple_select']").removeClass("fa-check text-success").addClass("fa-circle-o");
+            if(is_file) {
+                setOperate({
+                    canDownload : true,
+                    canFavour : true,
+                    canRemark : false,
+                    canRename : false,
+                    canCopyTo : true,
+                    canMoveTo : true,
+                    canDelete : true
+                });
+            }
+        }else {
+            is_multiple_select = false;
+            multiple_select_id_list = [];
+            download_list = [];
+            $("[name='table_index']").css("display", "inline");
+            $("[name='multiple_select']").css("display", "none");
+        }
+    }
+
+    $("#search_button").click(function () {
+        if($("#search_input").val() != null && $("#search_input").val().trim() != "") {
+            $.ajax({
+                url:"/favourSearch",
+                type:"post",
+                data: {
+                    searchWord:$("#search_input").val()
+                },
+                dataType:"json",
+                success:function (data) {
+                    contentData = data.data;
+                    tableViewInit(contentData);
+                },
+                error:function () {
+                    swal("请求失败,请稍后再试", {
+                        icon: "warning",
+                    });
+                }
+            });
+        }
+    });
+
+    $('#testModal').on('hide.bs.modal', function () {
+        $("#content_video")[0].pause();
+        $("#content_audio")[0].pause();
+    })
+
+    $("#content_modal").click(function () {
+        switch($("#file_type").html()) {
+            case '.mp3' :
+            case '.wav' :
+                $("#content_audio").css("display", "block");
+                $("#content_video").css("display", "none");
+                $("#content_text").css("display", "none");
+                $("#testModal").modal('show');
+                break;
+            case '.mp4' :
+            case '.avi' :
+            case '.mov' :
+                $("#content_audio").css("display", "none");
+                $("#content_video").css("display", "block");
+                $("#content_text").css("display", "none");
+                $("#testModal").modal('show');
+                break;
+            case '.txt' :
+            case '.html' :
+            case '.js' :
+            case '.py' :
+                $("#content_audio").css("display", "none");
+                $("#content_video").css("display", "none");
+                $("#content_text").css("display", "block");
+                $("#testModal").modal('show');
+                break;
+            case '.pdf' :
+                window.open($("#file_content_detail").attr("href"),"_blank");
+                return;
+            default:
+                return;
+        }
+    });
+
+    // 文件备注确认控制
+    $("#remark_verify").click(function (e) {
+        $.ajax({
+            url : "/updateRemark/",
+            type : "post",
+            data : {
+                isFile : is_file,
+                id : select_id,
+                newRemark : $('#remark_edit').val(),
+            },
+            dataType : "json",
+            success : function(data) {
+                if (data.flag == true) {
+                    $("#newRemarkModal").modal('hide');
+                    swal("编辑成功", {
+                        icon: "success",
+                    }).then((isOk)=>{
+                        if(is_file) {
+                            flushOperate();
+                        }
+                        initContent();
+                    });
+                } else {
+                    swal("请求失败,请稍后再试", {
+                        icon: "warning",
+                    });
+                }
+            },
+            error: function () {
+                swal("请求失败,请稍后再试", {
+                    icon: "warning",
+                });
+            }
+        });
+    });
+
+    // 文件重命名的控制选项
+    $("#file_rename").click(function () {
+        swal("输入新名称",{
+            content: {
+                element: "input",
+                attributes: {
+                    value: $("#file_name").html(),
+                    type: "text",
+                },
+            },
+        })
+            .then((value) => {
+                if(value != null && value != ''){
+                    $.ajax({
+                        url : "/updateName/",
+                        type : "post",
+                        data : {
+                            isFile : is_file,
+                            id : select_id,
+                            newName : value,
+                        },
+                        dataType : "json",
+                        success : function(data) {
+                            if (data.flag == true) {
+                                swal("修改成功", {
+                                    icon: "success",
+                                }).then((isOk)=>{
+                                    if(is_file){
+                                        flushOperate();
+                                    }
+                                    initContent();
+                                });
+                            } else {
+                                swal("请求失败,请稍后再试", {
+                                    icon: "warning",
+                                });
+                            }
+                        }
+                    })
+                }
+            });
+    });
+
+    $("#file_move_to").click(function () {
+        swal("输入要移动到的文件夹 ID",{
+            content: {
+                element: "input",
+                attributes: {
+                    value: "",
+                    type: "number",
+                },
+            },
+        }).then((value)=>{
+            if(value != null && value > 0) {
+                if(is_multiple_select) {
+                    if(multiple_select_id_list.length != 0) {
+                        $.ajax({
+                            url: "/multipleMoveFile",
+                            type: "post",
+                            data: {
+                                isFile: true,
+                                id: multiple_select_id_list,
+                                pathId: value
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if(data.flag) {
+                                    swal("修改成功", {
+                                        icon: "success"
+                                    }).then((isOk)=> {
+                                        location.reload();
+                                    });
+                                }else {
+                                    swal("ID 所指项目不存在", {
+                                        icon: "warning"
+                                    });
+                                }
+                            },
+                            error: function () {
+                                swal("请求失败,请稍后再试", {
+                                    icon: "warning"
+                                });
+                            }
+                        });
+                    }else {
+                        swal("请选择素材", {
+                            icon: "info"
+                        })
+                    }
+                }else {
+                    $.ajax({
+                        url: "/moveFile",
+                        type: "post",
+                        data: {
+                            isFile: is_file,
+                            id: select_id,
+                            pathId: value
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if(data.flag) {
+                                swal("修改成功", {
+                                    icon: "success"
+                                }).then((isOk)=> {
+                                    location.reload();
+                                });
+                            }else {
+                                swal("ID 所指项目不存在", {
+                                    icon: "warning"
+                                });
+                            }
+                        },
+                        error: function () {
+                            swal("请求失败,请稍后再试", {
+                                icon: "warning"
+                            });
+                        }
+                    });
+                }
+            }else {
+                swal("请输入 0 以上的值", {
+                    icon: "warning"
+                });
+            }
+        });
+    });
+
+    $("#file_copy_to").click(function () {
+        swal("输入要复制到的文件夹 ID",{
+            content: {
+                element: "input",
+                attributes: {
+                    value: "",
+                    type: "number",
+                },
+            },
+        }).then((value)=>{
+            if(value != null && value > 0) {
+                if(is_multiple_select) {
+                    if(multiple_select_id_list.length != 0) {
+                        $.ajax({
+                            url: "/multipleCopyFile",
+                            type: "post",
+                            data: {
+                                isFile: true,
+                                id: multiple_select_id_list,
+                                pathId: value
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if(data.flag) {
+                                    swal("修改成功", {
+                                        icon: "success"
+                                    }).then((isOk)=> {
+                                        location.reload();
+                                    });
+                                }else {
+                                    swal("ID 所指项目不存在", {
+                                        icon: "warning"
+                                    });
+                                }
+                            },
+                            error: function () {
+                                swal("请求失败,请稍后再试", {
+                                    icon: "warning"
+                                });
+                            }
+                        });
+                    }else {
+                        swal("请选择素材",{
+                            icon: "info"
+                        });
+                    }
+                }else {
+                    $.ajax({
+                        url: "/copyFile",
+                        type: "post",
+                        data: {
+                            isFile: is_file,
+                            id: select_id,
+                            pathId: value
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if(data.flag) {
+                                swal("修改成功", {
+                                    icon: "success"
+                                }).then((isOk)=> {
+                                    location.reload();
+                                });
+                            }else {
+                                swal("ID 所指项目不存在", {
+                                    icon: "warning"
+                                });
+                            }
+                        },
+                        error: function () {
+                            swal("请求失败,请稍后再试", {
+                                icon: "warning"
+                            });
+                        }
+                    });
+                }
+            }else {
+                swal("请输入 0 以上的值", {
+                    icon: "warning"
+                });
+            }
+        });
+    });
+
+    // 删除素材控制
+    $("#file_delete").click(function () {
+        swal({
+            title: "确定删除?",
+            text: "确认后素材文件将转移到回收站中\n在回收站中可永久删除",
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                if(is_multiple_select) {
+                    if(multiple_select_id_list.length != 0) {
+                        $.ajax({
+                            url : "/multipleUpdateDelete",
+                            type : "post",
+                            data : {
+                                isFile : true,
+                                pathId: 0,
+                                id : multiple_select_id_list,
+                                isDelete : true,
+                            },
+                            dataType : "json",
+                            success : function(data) {
+                                if(data.flag == true) {
+                                    swal("删除成功", {
+                                        icon: "success",
+                                    }).then((isOk)=>{
+                                        if(is_file){
+                                            setFolderData();
+                                        }
+                                        initContent();
+                                    });
+                                }else {
+                                    swal(data.msg, {
+                                        icon: "warning",
+                                    })
+                                }
+                            },
+                            error : function () {
+                                swal("请求失败,请稍后再试", {
+                                    icon: "warning",
+                                })
+                            }
+                        });
+                    }else {
+                        swal("请选择素材", {
+                            icon: "info"
+                        });
+                    }
+                }else {
+                    $.ajax({
+                        url : "/updateDelete",
+                        type : "post",
+                        data : {
+                            isFile : is_file,
+                            pathId: 0,
+                            id : select_id,
+                            isDelete : true,
+                        },
+                        dataType : "json",
+                        success : function(data) {
+                            if(data.flag == true) {
+                                swal("删除成功", {
+                                    icon: "success",
+                                }).then((isOk)=>{
+                                    if(is_file){
+                                        setFolderData();
+                                    }
+                                    initContent();
+                                });
+                            }else {
+                                swal(data.msg, {
+                                    icon: "warning",
+                                })
+                            }
+                        },
+                        error : function () {
+                            swal("请求失败,请稍后再试", {
+                                icon: "warning",
+                            })
+                        }
+                    });
+                }
+            } else {}
+        });
+    });
+
+    // 文件收藏选项的控制
+    $("#file_favour").click(function () {
+        if(is_multiple_select) {
+            if(multiple_select_id_list.length != 0) {
+                $.ajax({
+                    url : "/multipleUpdateFavour",
+                    type : "post",
+                    data : {
+                        isFile : true,
+                        id : multiple_select_id_list,
+                        isFavour : false,
+                    },
+                    dataType : "json",
+                    success : function(data) {
+                        if (data.flag == true) {
+                            flushOperate();
+                            initContent();
+                        } else {
+                            swal("请求失败,请稍后再试", {
+                                icon: "warning",
+                            })
+                        }
+                    }
+                });
+            }
+        }else {
+            $.ajax({
+                url : "/updateFavour",
+                type : "post",
+                data : {
+                    isFile : is_file,
+                    id : select_id,
+                    isFavour : false,
+                },
+                dataType : "json",
+                success : function(data) {
+                    if (data.flag == true) {
+                        flushOperate();
+                        initContent();
+                    } else {
+                        swal("请求失败,请稍后再试", {
+                            icon: "warning",
+                        })
+                    }
+                }
+            });
+        }
+    });
+
+    function downloadAction() {
+        if(!is_multiple_select) {
+            let a = document.createElement("a"),
+                e = document.createEvent("MouseEvents");
+            e.initEvent("click", false, false);
+            a.href = select_href;
+            a.download = select_name;
+            a.dispatchEvent(e);
+            a.remove();
+        }else {
+            for(let i = 0 ; i < download_list.length ; i++) {
+                let a = document.createElement("a"),
+                    e = document.createEvent("MouseEvents");
+                e.initEvent("click", false, false);
+                a.href = download_list[i].href;
+                a.download = download_list[i].name;
+                a.dispatchEvent(e);
+                a.remove();
+            }
+        }
+    }
+
+    $("#upload").click(function() {
+        $("#uploadInput").slideToggle(400);
+    });
+
+    function setOperate(msg) {
+        msg.canDownload == null || msg.canDownload == true ? $("#file_download").removeClass("disabled") : $("#file_download").addClass("disabled");
+        msg.canFavour == null || msg.canFavour == true ? $("#file_favour").removeClass("disabled") : $("#file_favour").addClass("disabled");
+        msg.canRemark == null || msg.canRemark == true ? $("#file_remark").removeClass("disabled") : $("#file_remark").addClass("disabled");
+        msg.canRename == null || msg.canRename == true ? $("#file_rename").removeClass("disabled") : $("#file_rename").addClass("disabled");
+        msg.canCopyTo == null || msg.canCopyTo == true ? $("#file_copy_to").removeClass("disabled") : $("#file_copy_to").addClass("disabled");
+        msg.canMoveTo == null || msg.canMoveTo == true ? $("#file_move_to").removeClass("disabled") : $("#file_move_to").addClass("disabled");
+        msg.canDelete == null || msg.canDelete == true ? $("#file_delete").removeClass("disabled") : $("#file_delete").addClass("disabled");
+    }
+
+    function getFileTypeClass(fileType) {
+        switch(fileType) {
+            case ".folder" :
+                return "fa fa-folder text-warning";
+            case ".pdf" :
+                return "fa fa-file-pdf-o text-danger";
+            case ".xlsx":
+                return "fa fa-file-excel-o text-success";
+            case ".pptx":
+            case ".ppt" :
+                return "fa fa-file-powerpoint-o text-warning";
+            case ".docx":
+            case ".doc":
+                return "fa fa-file-word-o text-info";
+            case ".txt" :
+                return "fa fa-file-text-o text-secondary";
+            case ".zip" :
+                return "fa fa-file-zip-o text-info";
+            case ".png" :
+            case ".jpg" :
+            case ".jpeg" :
+            case ".gif" :
+                return "fa fa-file-image-o text-primary";
+            case ".mp3" :
+            case ".wav" :
+                return "fa fa-file-sound-o text-primary";
+            case ".mp4" :
+            case ".avi" :
+            case ".mov" :
+                return "fa fa-file-video-o text-primary";
+            case ".js" :
+            case ".py" :
+            case ".html":
+                return "fa fa-file-code-o text-warning";
+            default :
+                return "fa fa-file-o";
+        }
+    }
+
+    $('.image-popup').magnificPopup({
+        type: 'image',
+        zoom: {
+            enabled: true,
+            duration: 300,
+            easing: 'ease-in-out',
+            opener: function(openerElement) {
+                return openerElement.is('img') ? openerElement : openerElement.find('img');
+            }
+        }
+    });
+</script>
+</html>

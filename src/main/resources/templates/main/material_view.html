@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link href="vendors/quill/quill.snow.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="vendors/tagsinput/bootstrap-tagsinput.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+</head>
+
+<body class="stretch-layout sticky-navigation shadow-layout">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+            <div class="row app-block">
+
+<!--                <div class="col-md-8 app-content">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-body">-->
+<!--&lt;!&ndash;                            <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div class="col-md-6">&ndash;&gt;-->
+<!--                                    <canvas id="chartjs_one"></canvas>-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                                <hr>-->
+<!--&lt;!&ndash;                                <div class="col-md-6">&ndash;&gt;-->
+<!--                                    <canvas id="chartjs_two"></canvas>-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="col-md-4 app-sidebar">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="app-sidebar-menu">
+                                <div class="list-group list-group-flush">
+                                    <a href="javascript:void(0)" class="list-group-item d-flex align-items-center">
+                                        <i data-feather="file" class="width-15 height-15 mr-2"></i> 全部素材
+                                        <span id="sum_all_number" class="small ml-auto">Nan</span>
+                                    </a>
+                                    <a href="javascript:void(0)" class="list-group-item d-flex align-items-center">
+                                        <i data-feather="star" class="width-15 height-15 mr-2"></i> 收藏素材
+                                        <span id="sum_favour_number" class="small ml-auto">Nan</span>
+                                    </a>
+                                    <a href="javascript:void(0)" class="list-group-item d-flex align-items-center">
+                                        <i data-feather="trash" class="width-15 height-15 mr-2"></i> 回收站
+                                        <span id="sum_delete_number" class="small ml-auto">Nan</span>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="mb-4">存储空间</h6>
+                                    <div class="d-flex align-items-center">
+                                        <div class="mr-3">
+                                            <i data-feather="database" class="width-30 height-30"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="progress" style="height: 10px">
+                                                <div id="sum_storage_bar" class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div id="sum_storage_text" class="line-height-12 small text-muted mt-2">25 / 0.02 GB</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-8 app-content">
+                    <div class="app-content-overlay"></div>
+
+                    <div class="card app-content-body">
+                        <div class="app-lists">
+                            <div class="card-body">
+                                <canvas id="chartjs_one"></canvas>
+                                <hr>
+                                <canvas id="chartjs_two"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+    </div>
+</body>
+<script src="vendors/bundle.js"></script>
+<script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>
+<script src="assets/js/examples/tagsinput.js"></script>
+<script src="vendors/quill/quill.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="vendors/charts/chartjs/chart.min.js"></script>
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    $(document).ready(function () {
+        let storage_value = 25;
+        let contentData;
+
+        $.ajax({
+            url:"/getStatisticsInfo",
+            type:"post",
+            data:{},
+            dataType: "json",
+            success: function (data) {
+                contentData = data.data[3];
+                $("#sum_all_number").html(data.data[0]);
+                $("#sum_favour_number").html(data.data[1]);
+                $("#sum_delete_number").html(data.data[2]);
+                let sum = 0;
+                contentData.forEach(e=>sum+=e.fileSize);
+                let value = (sum / (1024 * 1024 * 1024 * storage_value));
+                $("#sum_storage_bar").css("width", ""+value+"%");
+                $("#sum_storage_text").html("总空间: "+storage_value+"GB / 已经使用: "+ value.toFixed(2) + "GB");
+
+                chartjs_one();
+                chartjs_two();
+            },
+            error:function (data) {
+                swal("失败", {
+                    icon: "error",
+                })
+            }
+        });
+
+        // chartjs_three();
+        function chartjs_one() {
+            let element = document.getElementById("chartjs_one");
+            element.height = 100;
+            new Chart(element, {
+                type: 'bar',
+                data: {
+                    labels: [contentData[0].fileName,
+                        contentData[1].fileName,
+                        contentData[2].fileName,
+                        contentData[3].fileName,
+                        contentData[4].fileName,
+                        contentData[5].fileName],
+                    datasets: [{
+                        label: "素材个数",
+                        backgroundColor: [
+                            '#62a8ea',
+                            '#62ea70',
+                            '#eadc62',
+                            '#ea9262',
+                            '#ea6262',
+                            '#b3b3b3'
+                        ],
+                        data: [contentData[0].fileNumber,
+                            contentData[1].fileNumber,
+                            contentData[2].fileNumber,
+                            contentData[3].fileNumber,
+                            contentData[4].fileNumber,
+                            contentData[5].fileNumber]
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: '素材数量'
+                    }
+                }
+            });
+        }
+
+        function chartjs_two() {
+            var element = document.getElementById("chartjs_two");
+            element.height = 100;
+            new Chart(element, {
+                type: 'pie',
+                data: {
+                    labels: [contentData[0].fileName,
+                        contentData[1].fileName,
+                        contentData[2].fileName,
+                        contentData[3].fileName,
+                        contentData[4].fileName,
+                        contentData[5].fileName],
+                    datasets: [{
+                        label: "所占大小(GB)",
+                        borderWidth: 3,
+                        backgroundColor: [
+                            '#62a8ea',
+                            '#62ea70',
+                            '#eadc62',
+                            '#ea9262',
+                            '#ea6262',
+                            '#b3b3b3'
+                        ],
+                        data: [ (contentData[0].fileSize/(1024*1024)).toFixed(2),
+                            (contentData[1].fileSize/(1024*1024)).toFixed(2),
+                            (contentData[2].fileSize/(1024*1024)).toFixed(2),
+                            (contentData[3].fileSize/(1024*1024)).toFixed(2),
+                            (contentData[4].fileSize/(1024*1024)).toFixed(2),
+                            (contentData[5].fileSize/(1024*1024)).toFixed(2)]
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: '素材所占存储空间 (MB)'
+                    }
+                }
+            });
+        }
+        //
+        // function chartjs_three() {
+        //     var element = document.getElementById("chartjs_three");
+        //     element.height = 100;
+        //     new Chart(element, {
+        //         type: 'line',
+        //         data: {
+        //             labels: ["2020/11", "2020/12", "2021/1", "2021/2", "2021/3", "2021/4", "2021/5","2021/6"],
+        //             datasets: [{
+        //                 data: [0, 0, 80, 81, 56, 85, 40],
+        //                 label: "图片",
+        //                 borderColor: '#62a8ea',
+        //                 backgroundColor: 'rgba(98,168,234,0)',
+        //             }, {
+        //                 data: [0, 0, 20, 31, 96, 35, 80],
+        //                 label: "文本",
+        //                 borderColor: '#62ea70',
+        //                 backgroundColor: 'rgba(98,234,112,0)',
+        //             },{
+        //                 data: [0, 0, 53, 48, 20, 5, 58],
+        //                 label: "音频",
+        //                 borderColor: '#eadc62',
+        //                 backgroundColor: 'rgba(234,220,98,0)',
+        //             },{
+        //                 data: [0, 0, 13, 75, 34, 24, 78],
+        //                 label: "视频",
+        //                 borderColor: '#ea9262',
+        //                 backgroundColor: 'rgba(234,146,98,0)',
+        //             },{
+        //                 data: [0, 0, 2, 8, 1, 4, 21],
+        //                 label: "代码",
+        //                 borderColor: '#ea6262',
+        //                 backgroundColor: 'rgba(234,98,98,0)',
+        //             }
+        //
+        //             ]
+        //         },
+        //         options: {
+        //             title: {
+        //                 display: true,
+        //                 text: '素材存储情况(时序)'
+        //             }
+        //         }
+        //     });
+        // }
+    });
+</script>
+</html>

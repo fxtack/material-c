@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxtack.materialc.mapper.InviteCodeMapper">
+    <resultMap id="BaseResultMap" type="com.fxtack.materialc.entity.InviteCode">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="invite_value" jdbcType="VARCHAR" property="inviteValue"/>
+        <result column="invite_create_date" jdbcType="TIMESTAMP" property="inviteCreateDate"/>
+        <result column="invite_end_date" jdbcType="TIMESTAMP" property="inviteEndDate"/>
+        <result column="invite_stat" jdbcType="INTEGER" property="inviteStat"/>
+        <result column="invite_used_times" jdbcType="INTEGER" property="inviteUsedTimes"/>
+        <result column="invite_remark" jdbcType="VARCHAR" property="inviteRemark"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        id, invite_value, invite_create_date, invite_end_date, invite_stat, invite_used_times, invite_remark
+    </sql>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from invite_code
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from invite_code
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByValue" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from invite_code
+        where invite_value = #{inviteValue, jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from invite_code
+        where id = #{id, jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.fxtack.materialc.entity.InviteCode">
+        update invite_code
+        <set>
+            <if test="inviteValue != null">
+                invite_value = #{inviteValue, jdbcType=VARCHAR},
+            </if>
+            <if test="inviteCreateDate != null">
+                invite_create_date = #{inviteCreateDate, jdbcType=TIMESTAMP},
+            </if>
+            <if test="inviteEndDate != null">
+                invite_end_date = #{inviteEndDate, jdbcType=TIMESTAMP},
+            </if>
+            <if test="inviteStat != null">
+                invite_stat = #{inviteStat, jdbcType=INTEGER},
+            </if>
+            <if test="inviteUsedTimes != null">
+                invite_used_times = #{inviteUsedTimes, jdbcType=INTEGER},
+            </if>
+            <if test="inviteRemark != null">
+                invite_remark = #{inviteRemark, jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.fxtack.materialc.entity.InviteCode">
+        insert into invite_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="inviteValue != null">
+                invite_value,
+            </if>
+            <if test="inviteCreateDate != null">
+                invite_create_date,
+            </if>
+            <if test="inviteEndDate != null">
+                invite_end_date,
+            </if>
+            <if test="inviteStat != null">
+                invite_stat,
+            </if>
+            <if test="inviteUsedTimes != null">
+                invite_used_times,
+            </if>
+            <if test="inviteRemark != null">
+                invite_remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id, jdbcType=INTEGER},
+            </if>
+            <if test="inviteValue != null">
+                #{inviteValue, jdbcType=VARCHAR},
+            </if>
+            <if test="inviteCreateDate != null">
+                #{inviteCreateDate, jdbcType=TIMESTAMP},
+            </if>
+            <if test="inviteEndDate != null">
+                #{inviteEndDate, jdbcType=TIMESTAMP},
+            </if>
+            <if test="inviteStat != null">
+                #{inviteStat, jdbcType=INTEGER},
+            </if>
+            <if test="inviteUsedTimes != null">
+                #{inviteUsedTimes, jdbcType=INTEGER},
+            </if>
+            <if test="inviteRemark != null">
+                #{inviteRemark, jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insert" parameterType="com.fxtack.materialc.entity.InviteCode">
+        insert into invite_code(
+            id,
+            invite_value,
+            invite_create_date,
+            invite_end_date,
+            invite_stat,
+            invite_used_times,
+            invite_remark
+        )values(
+            #{id, jdbcType=INTEGER},
+            #{inviteValue, jdbcType=VARCHAR},
+            #{inviteCreateDate, jdbcType=TIMESTAMP},
+            #{inviteEndDate, jdbcType=TIMESTAMP},
+            #{inviteStat, jdbcType=INTEGER},
+            #{inviteUsedTimes, jdbcType=INTEGER},
+            #{inviteRemark, jdbcType=VARCHAR}
+        )
+    </insert>
+</mapper>

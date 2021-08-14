@@ -1,0 +1,52 @@
+server:
+  port: 8005
+spring:
+  servlet:
+    multipart:
+      max-file-size:
+        100GB
+      max-request-size:
+        100GB
+  mvc:
+    static-path-pattern: /**
+
+  thymeleaf:
+    servlet:
+      content-type: text/html
+    encoding: UTF-8
+    cache: false
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost/material_c?useUnicode=true&amp&characterEncoding=UTF-8&amp&userSSL=false&amp&serverTimezone=GMT%2B8
+    username: root
+    password: 1244875112
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  typeAliasesPackage: com.fxtack.materialc.entity
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+  level:
+    org.springframework: info
+    data: DEBUG
+    security: DEBUG
+  config: classpath:config/logback-spring.xml
+
+delete-thread:
+  enable: false
+  second: 15
+  minute: 0
+  hour: 0
+  day: 0
+  month: 0
+  polling: 10000
+  #每天轮询:86400000

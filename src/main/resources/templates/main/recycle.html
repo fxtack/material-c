@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link href="vendors/quill/quill.snow.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="vendors/tagsinput/bootstrap-tagsinput.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+</head>
+
+<body class="sticky-navigation shadow-layout">
+
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+
+        <main class="main-content">
+            <div class="row app-block">
+                <div class="col-md-12 app-content">
+                    <div class="app-content-overlay"></div>
+                    <h5 class="mb-4">回收站</h5>
+                    <div class="app-action">
+                        <div class="action-left">
+                            <ul class="list-inline">
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        <i data-feather="plus" class="mr-2"></i> 添加
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">文件夹</a>
+                                        <a class="dropdown-item" href="#">文件</a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">文件</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            视频
+                                            <span class="text-muted">21</span>
+                                        </a>
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            图片
+                                            <span class="text-muted">5</span>
+                                        </a>
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            音频
+                                            <span class="text-muted">12</span>
+                                        </a>
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            文件夹
+                                            <span class="text-muted">7</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        排序
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">日期</a>
+                                        <a class="dropdown-item" href="#">名称</a>
+                                        <a class="dropdown-item" href="#">大小</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="action-right">
+                            <form class="d-flex mr-3">
+                                <a href="#" class="app-sidebar-menu-button btn btn-outline-light">
+                                    <i data-feather="menu"></i>
+                                </a>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="搜索素材" aria-describedby="button-addon1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-light" type="button" id="button-addon1">
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card app-content-body">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-pdf-o text-danger"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>resume111111111111111111111111111111.pdf</div>
+                                            <div class="text-muted">1.2mb
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-excel-o text-success"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>last-months-report.xlsx</div>
+                                            <div class="text-muted">120.85kb
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-text-o text-warning"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>todo-list.txt</div>
+                                            <div class="text-muted">1.85kb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-powerpoint-o text-secondary"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>presentation-file.pptx</div>
+                                            <div class="text-muted">10.50kb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-excel-o text-success"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>contact-list.xlsx</div>
+                                            <div class="text-muted">8.7mb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-zip-o text-primary"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>website-html-files.zip</div>
+                                            <div class="text-muted">100mb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-word-o text-info"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>articles.docx</div>
+                                            <div class="text-muted">100.25kb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-12">
+                                    <div class="card app-file-list">
+                                        <div class="app-file-icon">
+                                            <i class="fa fa-file-word-o text-info"></i>
+                                            <div class="dropdown position-absolute top-0 right-0 mr-3">
+                                                <a href="#" class="font-size-14" data-toggle="dropdown">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">View Details</a>
+                                                    <a href="#" class="dropdown-item">Share</a>
+                                                    <a href="#" class="dropdown-item">Download</a>
+                                                    <a href="#" class="dropdown-item">Copy to</a>
+                                                    <a href="#" class="dropdown-item">Move to</a>
+                                                    <a href="#" class="dropdown-item">Rename</a>
+                                                    <a href="#" class="dropdown-item">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 small">
+                                            <div>articles.docx</div>
+                                            <div class="text-muted">100.25kb</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+    </div>
+</body>
+<script src="vendors/bundle.js"></script>
+<script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>
+<script src="assets/js/examples/tagsinput.js"></script>
+<script src="vendors/quill/quill.js"></script>
+<script src="assets/js/app.js"></script>
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    $(function() {
+        $(document).on('click', '.file-upload-btn', function() {
+            $('form#file-upload input[type="file"]').trigger('click');
+        });
+
+        $(document).on('click', '.app-sidebar-menu-button', function() {
+            $('.app-block .app-sidebar, .app-content-overlay').addClass('show');
+            // $('.app-block .app-sidebar .app-sidebar-menu').niceScroll().resize();
+            return false;
+        });
+
+        $(document).on('click', '.app-content-overlay', function() {
+            $('.app-block .app-sidebar, .app-content-overlay').removeClass('show');
+            return false;
+        });
+    });
+</script>
+</html>

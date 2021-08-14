@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{commons/commons_file::head('Home')}">
+<body class="shadow-layout">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+            <div class="page-header">
+                <h4 th:text="${folder.folderName}"></h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="javascript:void(0);">素材集装箱</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a name="material_folder" th:id="${folder.id}" th:text="${folder.folderName}" href="javascript:void(0);"></a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div th:replace="~{commons/commons_file::file_input}"></div>
+            <div class="row app-block">
+                <div class="col-md-8 app-content">
+                    <div class="app-content-overlay"></div>
+                    <div th:replace="~{commons/commons_file::action_bar}"></div>
+
+                    <div class="card app-content-body">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">名称</th>
+                                        <th scope="col">类型</th>
+                                        <th scope="col">大小</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">创建日期</th>
+                                        <th scope="col">备注</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:block th:each="material : ${materialList}">
+                                        <tr style="cursor:pointer" th:id="${material.id}" name="material_file">
+                                            <th th:text="${materialStat.index+1}" scope="row">1</th>
+                                            <td th:text="${material.pictureName + material.pictureSuffix}"></td>
+                                            <td th:text="${material.pictureSuffix}"></td>
+                                            <td th:text="${material.pictureSize}"></td>
+                                            <td th:text="${material.pictureWh != null ? material.pictureWh+' xp' : ''}"></td>
+                                            <td th:text="${#dates.format(material.pictureCreateDate.getTime(),'yyyy-MM-dd')}"></td>
+                                            <td th:text="${material.remark.length() >= 5 ? material.remark.substring(0,5)+'...' : material.remark}">asdasdasd</td>
+                                            <td>
+                                                <a class="add-star mr-3" th:style="${material.isFavour == 1 ? 'display:block' : 'display:none'}">
+                                                    <i class="fa fa-star font-size-16 text-warning"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="~{commons/commons_file::operate_nav}"></div>
+            </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+        <div th:replace="~{commons/commons_file::remark_editor}"></div>
+    </div>
+</body>
+<div th:replace="~{commons/commons_file::js_import}"></div>
+<style>
+    a.disabled {
+        pointer-events: none;
+        filter: alpha(opacity=50); /*IE滤镜，透明度50%*/
+        -moz-opacity: 0.5; /*Firefox私有，透明度50%*/
+        opacity: 0.5; /*其他，透明度50%*/
+    }
+</style>
+<script th:replace="~{commons/commons_file::file_upload}"></script>
+<script>
+    // 虚拟文件夹的绝对路径
+    let virtual_file_absolute = "[[${folder.folderAbsolute + folder.folderName}]]/";
+    // 判断是一个文件还是一个文件夹，文件夹为 false，文件为 true
+    let is_file = false;
+    // 选中文件或文件夹的 id
+    let select_id = [[${folder.id}]];
+    // 名称指向，div 请求获取素材内容
+    $("tr[name = 'material_file']").click(function () {
+        $.ajax({
+            url : "/getMessage/",
+            type : "post",
+            data : {
+                isFile : true,
+                id : this.id,
+            },
+            dataType : "json",
+            success : function(data) {
+                if (data.flag == true) {
+                    setBar({
+                        absolutePath : virtual_file_absolute+data.data.pictureName+data.data.pictureSuffix,
+                        content : data.data.picturePath,
+                        name : data.data.pictureName,
+                        type : data.data.pictureSuffix,
+                        size : data.data.pictureSize,
+                        wh : data.data.pictureWh != null ? data.data.pictureWh + ' xp' : '',
+                        date : data.data.pictureCreateDate.substring(0,10),
+                        remark : data.data.remark,
+                    });
+                    setOperate({
+                        canDownload : true,
+                        canFavour : true
+                    });
+                    // alert(data.data.pictureType.substring(0,5));
+                    if(data.data.pictureType.substring(0,5) == 'image') {
+                        if($("#file_view").css("display") != 'none') {        // 素材图标的更改
+                            $("#file_view").css("display",'none');
+                        }
+                        $("#image_view").css("display","inline");
+                    }else {
+                        switchFileIcon(data.data.pictureSuffix);
+                    }
+
+                    if(data.data.isFavour == 1) {
+                        $("#favour_ico").css("display", 'block');
+                        $("#file_favour").html("取消收藏");
+                    }else {
+                        $("#favour_ico").css("display", 'none');
+                        $("#file_favour").html("收藏");
+                    }
+                    select_id = data.data.id;                                                                       // 选中的 id
+                    is_file = true;                                                                                 // 选中的选项是否是素材文件
+                } else {
+                    swal("请求失败,请稍后再试", {
+                        icon: "warning",
+                    })
+                }
+            },
+            error: function () {
+                swal("请求失败,请稍后再试", {
+                    icon: "warning",
+                })
+            }
+        });
+    });
+</script>
+</html>

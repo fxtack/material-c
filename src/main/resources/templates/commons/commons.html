@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <div class="navigation" th:fragment="side-nav-bar">
+        <div id="logo">
+            <a href="/">
+                <img class="logo" src="/assets/media/image/logo.png" alt="logo">
+                <img class="logo-sm" src="/assets/media/image/logo-sm.png" alt="small logo">
+                <img class="logo-dark" src="/assets/media/image/logo-dark.png" alt="dark logo">
+            </a>
+        </div>
+        <header class="navigation-header">
+            <!-- <figure class="avatar avatar-state-success"> 在头像上加个绿点-->
+            <figure class="avatar">
+                <!--头像-->
+                <span id="user_info_head" class="avatar-title bg-warning rounded-circle"></span>
+            </figure>
+            <div>
+                <h5 id="user_info_name"></h5>
+                <p id="user_info_role" class="text-muted"></p>
+                <ul class="nav">
+
+                    <!--三按钮功能面板-->
+                    <li class="nav-item">
+                        <a th:href="@{/main/info}" class="btn nav-link bg-info-bright" title="我的信息" data-toggle="tooltip">
+                            <i data-feather="user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/main/setting}" class="btn nav-link bg-success-bright" title="用户管理" data-toggle="tooltip">
+                            <i data-feather="settings"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form th:action="@{/logout}" method="post" id="logout"></form>
+                        <a href="#" class="btn nav-link bg-danger-bright" title="退出用户" data-toggle="tooltip" onclick="document.getElementById('logout').submit()">
+                            <i data-feather="log-out"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <div class="navigation-menu-body">
+            <ul>
+                <li class="navigation-divider">功能</li>
+                <li>
+                    <a th:href="@{/main/task}">
+                        <i class="nav-link-icon fa fa-list"></i>
+                        <span>计划与安排</span>
+                    </a>
+
+                </li>
+<!--                <li>-->
+<!--                    <a th:href="@{/main/project}">-->
+<!--                        <i class="nav-link-icon" data-feather="grid"></i>-->
+<!--                        <span>工具箱</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+                <li class="open">
+                    <a th:href="@{/main/}">
+                        <i class="nav-link-icon fa fa-book" ></i>
+                        <span>素材管理</span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a th:href="@{/main/material_view}">
+                                <i class="nav-link-icon fa fa-pie-chart"></i> 素材概览
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/main/favour}">
+                                <i class="nav-link-icon fa fa-star"></i> 收藏素材
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/main/recycle}">
+                                <i class="nav-link-icon fa fa-trash"></i> 回收站
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="navigation-divider">素材文件</li>
+
+                <li class="open">
+                    <a href="#">
+                        <i class="nav-link-icon fa fa-folder-open"></i>
+                        <span onclick="javascript:window.location.href='/main/file/1'">素材集装箱</span>
+                    </a>
+                    <ul id="materialC_content_folder">
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="header" th:fragment="top-nav-bar">
+        <ul class="navbar-nav">
+            <!-- begin::navigation-toggler -->
+            <li class="nav-item navigation-toggler">
+                <a href="#" class="nav-link">
+                    <i data-feather="menu"></i>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link" title="Fullscreen" data-toggle="fullscreen">
+                    <i class="maximize" data-feather="maximize"></i>
+                    <i class="minimize" data-feather="minimize"></i>
+                </a>
+            </li>
+        </ul>
+
+        <div class="header-right">
+            <ul class="navbar-nav">
+
+            </ul>
+        </div>
+    </div>
+
+    <div th:fragment="bottom-footer-bar">
+        <footer>
+            <div class="container">
+                <div>Material-C 素材集装箱 -- version 0.2</div>
+                <div>
+                    <nav class="nav">
+                        <a href="javascript:void(0)" onclick="f()" class="nav-link">作者 Fxtack</a>
+                        <a href="javascript:void(0)" class="nav-link">计算机应用能力大赛参赛作品</a>
+                        <a href="javascript:void(0)" class="nav-link">Material-C</a>
+                    </nav>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+<script th:fragment="init_user_info">
+    $(document).ready(function () {
+        $.ajax({
+            url: "/getInfo",
+            type: "post",
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                if(data.flag) {
+                    $("#user_info_name").html(data.data.userName);
+                    $("#user_info_head").html(data.data.userName.charAt(0));
+                    $("#user_info_role").html(data.data.roles);
+                }else {
+                    swal(data.msg, {
+                        icon: "warning"
+                    });
+                }
+            },
+            error: function () {
+                swal("请求失败, 请稍后再试", {
+                    icon: "warning"
+                });
+            }
+        });
+
+        $.ajax({
+            url: "/getMaterialC",
+            type: "post",
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                if(data.flag) {
+                    let s = "";
+                    for(let i = 0 ; i < data.data.length ; i++) {
+                        s+= "<li>\n" +
+                            "    <a href='"+data.data[i].picturePath+"'>\n" +
+                            "        <i class=\"nav-link-icon fa fa-folder\"></i>\n" +
+                            "        <span>"+data.data[i].pictureName+"</span>\n" +
+                            "    </a>\n" +
+                            "</li>";
+                    }
+                    $("#materialC_content_folder").html(s);
+                }else {
+                    swal(data.msg, {
+                        icon: "warning"
+                    });
+                }
+            },
+            error: function () {
+                swal("请求失败, 请稍后再试", {
+                    icon: "warning"
+                });
+            }
+        })
+    });
+</script>
+</html>

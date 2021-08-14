@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxtack.materialc.mapper.StatisticsInfoMapper">
+    <resultMap id="BaseResultMap" type="com.fxtack.materialc.entity.StatisticsInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="file_type" jdbcType="VARCHAR" property="fileType"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="file_number" jdbcType="INTEGER" property="fileNumber"/>
+        <result column="file_size" jdbcType="BIGINT" property="fileSize"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        id, file_name, file_type, file_number, file_size
+    </sql>
+    <select id="selectByFileType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from global_statistics
+        where file_type = #{typeName, jdbcType=VARCHAR}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from global_statistics
+    </select>
+    <select id="selectSumNumber" resultType="java.lang.Integer">
+        select
+        SUM(file_number)
+        from global_statistics
+    </select>
+    <select id="selectSumSize" resultType="java.lang.Integer">
+        select
+        SUM(file_size)
+        from global_statistics
+    </select>
+</mapper>

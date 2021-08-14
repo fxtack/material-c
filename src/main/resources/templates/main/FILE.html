@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link rel="stylesheet" href="vendors/quill/quill.snow.css"  type="text/css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/bootstrap-fileinput/css/fileinput.min.css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+
+</head>
+
+<body class="sticky-navigation">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+            <div class="page-header">
+                <h4>素材集装箱</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">根目录</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">图片</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card app-content-body" id="uploadInput" style="display: none;">
+                <div class="card-body">
+                    <div class="tile">
+                        <div class="file-loading">
+                            <input id="input-fas" autocomplete="off" name="file" type="file" class="file-loading" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row app-block">
+                <div class="col-md-8 app-content">
+                    <div class="app-content-overlay"></div>
+                    <div class="app-action">
+                        <div class="action-left">
+                            <ul class="list-inline">
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light" id="upload">
+                                        <i data-feather="plus" class="mr-2"></i> 上传素材
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light">
+                                        <i data-feather="plus" class="mr-2"></i> 新建文件夹
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">文件</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            视频
+                                            <span class="text-muted">21</span>
+                                        </a>
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            图片
+                                            <span class="text-muted">5</span>
+                                        </a>
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            音频
+                                            <span class="text-muted">12</span>
+                                        </a>
+                                        <a class="dropdown-item d-flex justify-content-between" href="#">
+                                            文件夹
+                                            <span class="text-muted">7</span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        排序
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">日期</a>
+                                        <a class="dropdown-item" href="#">名称</a>
+                                        <a class="dropdown-item" href="#">大小</a>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item mb-0">
+                                    <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                        查看
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">缩略图</a>
+                                        <a class="dropdown-item" href="#">详细信息</a>
+                                        <a class="dropdown-item" href="#">图片视图</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="action-right">
+                            <form class="d-flex mr-3">
+                                <a href="#" class="app-sidebar-menu-button btn btn-outline-light">
+                                    <i data-feather="menu"></i>
+                                </a>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="搜索素材" aria-describedby="button-addon1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-light" type="button" id="button-addon1">
+                                            <i data-feather="search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card app-content-body">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">名称</th>
+                                        <th scope="col">类型</th>
+                                        <th scope="col">大小</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">创建日期</th>
+                                        <th scope="col">备注</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="table_body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 app-content">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                文件名字
+                            </div>
+                            <hr>
+                            <div class="app-file-list">
+                                <div class="app-file-icon">
+                                    <i class="fa fa-file-pdf-o text-danger"></i>
+                                </div>
+                                <div class="p-3 small">
+                                    <div>resume.pdf</div>
+                                    <div class="text-muted">1.2mb</div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                            <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
+                                操作
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="assets/media/image/portfolio-one.jpg" download="文件名字">下载</a>
+                                <a class="dropdown-item" href="#">收藏</a>
+                                <a class="dropdown-item" href="#">重命名</a>
+                                <a class="dropdown-item" href="#">复制到</a>
+                                <a class="dropdown-item" href="#">移动到</a>
+                                <a class="dropdown-item" href="#" id="delete_verify">删除</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+    <div th:replace="~{commons/commons_file::js_import}"></div>
+</body>
+
+<script>
+
+    $(document).ready(function() {
+        $.ajax({
+            url:"/getFolderFile",
+            type:"post",
+            data:{
+                pathId:1
+            },
+            dataType: "json",
+            success: function (data) {
+                swal("成功", {
+                    icon: "success",
+                })
+                let result;
+                for(let i = 0 ; i < data.data.length ; i++) {
+                    result+=set({
+                        id:data.data[i].id,
+                        index:i,
+                        name:data.data[i].pictureName,
+                        suffix:data.data[i].pictureSuffix,
+                        size:data.data[i].pictureSize,
+                        wh:data.data[i].pictureType.substring(0,5) == 'image' ? data.data[i].pictureWh : '',
+                        date:data.data[i].pictureCreateDate,
+                        remark:data.data[i].remark,
+                    });
+                }
+                $("#table_body").html(result);
+            },
+            error:function () {
+                swal("失败", {
+                    icon: "error",
+                })
+            }
+        })
+    });
+
+    function set(object) {
+        let a =
+        "<tr style=\"cursor:pointer\" id=\""+object.id+"\" name=\"material_file\">\n" +
+        "                                            <th scope=\"row\">"+object.index+"</th>\n" +
+        "                                            <td text=\"${material.pictureName + material.pictureSuffix}\">"+object.name+"</td>\n" +
+        "                                            <td text=\"${material.pictureSuffix}\">"+object.suffix+"</td>\n" +
+        "                                            <td text=\"${material.pictureSize}\">"+object.size+"</td>\n" +
+        "                                            <td text=\"${material.pictureWh != null ? material.pictureWh+' xp' : ''}\">"+object.wh+"</td>\n" +
+        "                                            <td text=\"${#dates.format(material.pictureCreateDate.getTime(),'yyyy-MM-dd')}\">"+object.date+"</td>\n" +
+        "                                            <td text=\"${material.remark.length() >= 5 ? material.remark.substring(0,5)+'...' : material.remark}\">"+object.remark+"</td>\n" +
+        "                                            <td>\n" +
+        "                                                <a class=\"add-star mr-3\" style=\"${material.isFavour == 1 ? 'display:block' : 'display:none'}\">\n" +
+        "                                                    <i class=\"fa fa-star font-size-16 text-warning\"></i>\n" +
+        "                                                </a>\n" +
+        "                                            </td>\n" +
+        "                                        </tr>"
+        return a;
+    }
+
+    $("#delete_verify").click(function () {
+        swal({
+            title: "确定删除?",
+            text: "确认删除后，可能无法再找回文件",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                swal("删除成功", {
+                    icon: "success",
+                });
+            } else {
+                swal("取消删除", {
+                    icon: "warning",
+                })
+            }
+        });
+    });
+    $("#upload").click(function() {
+        $("#uploadInput").slideToggle(400);
+    });
+    $("#input-fas").fileinput(
+        {
+            theme : "fa",
+            uploadUrl : "/main/file/upload",
+            language : 'zh',
+            uploadAsync : true,
+            allowedFileExtensions : [ 'jpg', 'gif', 'png', 'jpeg',
+                'svg', 'psd' ],
+            enctype : 'multipart/form-data',
+            showClose : false
+        }).on("filebatchuploadcomplete", function(event, files, extra) {
+        $.toast({
+            text : "上传成功！",
+            heading : '提示',
+            icon : 'success',
+            showHideTransition : 'fade',
+            allowToastClose : true,
+            hideAfter : 1000,
+            stack : 1,
+            position : 'top-center',
+            textAlign : 'left',
+            loader : true,
+            loaderBg : '#ffffff',
+            afterHidden : function() {
+                window.location.reload();
+            }
+        });
+    });
+</script>
+</html>

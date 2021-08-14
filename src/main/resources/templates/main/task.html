@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link rel="stylesheet" href="vendors/clockpicker/bootstrap-clockpicker.min.css" type="text/css">
+    <link rel="stylesheet" href="vendors/datepicker/daterangepicker.css" type="text/css">
+    <link rel="stylesheet" href="vendors/select2/css/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+</head>
+
+<body class="stretch-layout sticky-navigation shadow-layout">
+
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+
+        <main class="main-content">
+
+            <div class="row app-block">
+                <div class="col-md-3 app-sidebar">
+                    <div class="card">
+                        <div class="card-body">
+                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#newTaskModal">
+                            <i data-feather="plus" class="mr-2"></i>
+                            新任务
+                        </button>
+                        </div>
+                        <div class="app-sidebar-menu">
+                            <div class="card-body">
+                                <h6 class="mb-0">标签</h6>
+                            </div>
+                            <div class="list-group list-group-flush">
+                                <a href="#" class="list-group-item d-flex align-items-center">
+                                    <span class="text-warning fa fa-circle mr-2"></span> 撰写文稿
+                                    <span id="tag_all_1" class="small ml-auto">0</span>
+                                </a>
+                                <a href="#" class="list-group-item d-flex align-items-center">
+                                    <span class="text-success fa fa-circle mr-2"></span> 媒体后期
+                                    <span id="tag_all_2" class="small ml-auto">0</span>
+                                </a>
+                                <a href="#" class="list-group-item d-flex align-items-center">
+                                    <span class="text-danger fa fa-circle mr-2"></span> 任务安排
+                                    <span id="tag_all_3" class="small ml-auto">0</span>
+                                </a>
+                                <a href="#" class="list-group-item d-flex align-items-center">
+                                    <span class="text-info fa fa-circle mr-2"></span> 作品交付
+                                    <span id="tag_all_4" class="small ml-auto">0</span>
+                                </a>
+                                <a href="#" class="list-group-item d-flex align-items-center">
+                                    <span class="text-secondary fa fa-circle mr-2"></span> 素材收集
+                                    <span id="tag_all_5" class="small ml-auto">0</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 app-content">
+                    <div class="card card-body app-content-body">
+                        <div class="app-lists">
+                            <ul id="task_list" class="list-group list-group-flush">
+                            </ul>
+                        </div>
+                        <div class="card app-detail">
+                            <div class="card-header">
+                                <div class="app-detail-action-left">
+                                    <a class="app-detail-close-button" href="#">
+                                        <i data-feather="arrow-left" class="mr-3"></i>
+                                    </a>
+                                    <h5 id="task_title" class="mb-0"></h5>
+                                </div>
+                                <div class="app-detail-action-right">
+                                    <div>
+                                        <a id="is_finish" href="javascript:void(0)" class="btn btn-success">
+                                            <i data-feather="check" class="mr-2"></i>
+                                        </a>
+                                        <span data-toggle="modal" data-target="#editTaskModal">
+                                        <a href="#" class="btn btn-outline-light ml-2" title="编辑任务"
+                                           data-toggle="tooltip">
+                                            <i data-feather="edit-3"></i>
+                                        </a>
+                                    </span>
+                                        <a id="task_delete" href="javascript:void(0)" class="btn btn-outline-light ml-2" data-toggle="tooltip" title="删除任务">
+                                            <i data-feather="trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="app-detail-article">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center p-l-r-0 m-b-20">
+                                        <div class="d-flex align-items-center">
+                                            <span id="task_sponsor" class="text-primary mr-2">发起人: </span>
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div class="row">
+                                                <div id='task_tag'></div>
+                                                <a id="task_project_id" href="**" data-toggle="tooltip" title="前往项目" class="mr-2">
+                                                    <i class="fa fa-paperclip"></i>
+                                                </a>
+                                                <span id="task_deadline" class="text-muted">**</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p id="task_content">**</p>
+                                </div>
+                                <hr class="m-0">
+                                <div class="card-body">
+                                    <h6 class="mb-3 font-size-11 text-uppercase">附录</h6>
+                                    <ul id="task_appendix" class="list-unstyled mb-0">
+                                        <li class="small">
+                                            <a href="javascript:void(0)">
+                                                <i data-feather="paperclip" class="mr-1 width-15 height-15"></i> 字体素材网站
+                                            </a>
+                                        </li>
+                                        <li class="small">
+                                            <a href="javascript:void(0)">
+                                                <i data-feather="paperclip" class="mr-1 width-15 height-15"></i> 预备素材网站,可录入
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+
+    </div>
+
+    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">新任务</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti-close"></i>
+                </button>
+                </div>
+                <div class="modal-body">
+<!--                    <form autocomplete="off">-->
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">任务标题</label>
+                            <div class="col-sm-9">
+                                <input id="new_task_title" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">任务标签</label>
+                            <div class="col-sm-9">
+                                <select id="new_task_tag" class="js-example-basic-single" multiple>
+                                    <option value="1">撰写文稿.</option>
+                                    <option value="2">媒体后期.</option>
+                                    <option value="3">任务安排.</option>
+                                    <option value="4">作品交付.</option>
+                                    <option value="5">素材收集.</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row row-sm">
+                            <label class="col-sm-3 col-form-label">截止时间</label>
+                            <div class="col-sm-5">
+                                <input id="new_task_date" type="text" class="form-control create-event-datepicker" placeholder="日期">
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="new_task_time" type="text" class="form-control create-event-demo" placeholder="时间">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">内容</label>
+                            <div class="col-sm-9">
+                                <textarea id="new_task_content" class="form-control" rows="6"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">附录</label>
+                            <div class="col-sm-4">
+                                <input id="new_task_appendix_name" type="text" class="form-control" placeholder="链接描述">
+                            </div>
+                            <div class="col-sm-5">
+                                <input id="new_task_appendix_link" type="text" class="form-control" placeholder="网址链接">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">项目 id</label>
+                            <div class="col-sm-9">
+                                <input id="new_task_project_id" type="number" class="form-control" rows="6">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button id="submit_new_task" class="btn btn-primary">创建</button>
+                            </div>
+                        </div>
+<!--                    </form>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">编辑任务</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti-close"></i>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">任务标题</label>
+                            <div class="col-sm-9">
+                                <input id="task_title_edit" type="text" class="form-control" placeholder="Title" value="Draw design and presentation for customers.">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">任务标签</label>
+                            <div class="col-sm-9">
+                                <select id="task_tag_edit" class="js-example-basic-single" multiple>
+                                <option id="tag_1" value="1">撰写文稿.</option>
+                                <option id="tag_2" value="2">媒体后期.</option>
+                                <option id="tag_3" value="3">任务安排.</option>
+                                <option id="tag_4" value="4">作品交付.</option>
+                                <option id="tag_5" value="5">素材收集.</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group row row-sm">
+                            <label class="col-sm-3 col-form-label">截止时间</label>
+                            <div class="col-sm-5">
+                                <input id="task_deadline_data_edit" type="text" class="form-control create-event-datepicker" placeholder="日期" value="">
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="task_deadline_time_edit" type="text" class="form-control create-event-demo" value="" placeholder="时间">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">内容</label>
+                            <div class="col-sm-9">
+                                <textarea id="task_content_edit" class="form-control" rows="6"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">附录</label>
+                            <div class="col-sm-4">
+                                <input id="task_appendix_name_edit" type="text" class="form-control" placeholder="链接描述">
+                            </div>
+                            <div class="col-sm-5">
+                                <input id="task_appendix_link_edit" type="text" class="form-control" placeholder="网址链接">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-success">
+                                <i data-feather="check" class="mr-2"></i>
+                                保存
+                            </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="vendors/bundle.js"></script>
+<script src="vendors/clockpicker/bootstrap-clockpicker.min.js"></script>
+<script src="assets/js/examples/clockpicker.js"></script>
+<script src="vendors/datepicker/daterangepicker.js"></script>
+<script src="assets/js/examples/datepicker.js"></script>
+<script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>
+<script src="assets/js/examples/tagsinput.js"></script>
+<script src="vendors/select2/js/select2.min.js"></script>
+<script src="assets/js/examples/select2.js"></script>
+<script src="assets/js/app.js"></script>
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    let taskContent;
+    let selectId;
+    $(function() {
+        $.ajax({
+            url: "/getAllTask",
+            type:"post",
+            data:{},
+            dataType: "json",
+            success: function(data) {
+                taskContent = data.data;
+                setTaskList(taskContent);
+            },
+            error : function(data) {
+                swal("加载失败", {
+                    icon: "error",
+                })
+            }
+        });
+        $.ajax({
+            url: "/getAllTag",
+            type: "post",
+            data: {},
+            dataType: "json",
+            success: function(data) {
+                $("#tag_all_1").html(data.data[0]);
+                $("#tag_all_2").html(data.data[1]);
+                $("#tag_all_3").html(data.data[2]);
+                $("#tag_all_4").html(data.data[3]);
+                $("#tag_all_5").html(data.data[4]);
+            },
+            error: function(data) {
+                swal("加载失败", {
+                    icon: "error",
+                })
+            }
+        });
+
+        function setTaskList(list) {
+            let content = "";
+            let tags = "";
+            for(let i = 0 ; i < list.length ; i++) {
+                for(let j = 0 ; j < list[i].taskTag.length ; j++) {
+                    switch (list[i].taskTag[j]) {
+                        case '撰写文稿':
+                            tags += "<span class='badge bg-warning badge-pill mr-2'>"+list[i].taskTag[j]+"</span>";
+                            break;
+                        case '媒体后期':
+                            tags += "<span class='badge bg-success badge-pill mr-2'>"+list[i].taskTag[j]+"</span>";
+                            break;
+                        case '任务安排':
+                            tags += "<span class='badge bg-danger badge-pill mr-2'>"+list[i].taskTag[j]+"</span>";
+                            break;
+                        case '作品交付':
+                            tags += "<span class='badge bg-info badge-pill mr-2'>"+list[i].taskTag[j]+"</span>";
+                            break;
+                        case '素材收集':
+                            tags += "<span class='badge bg-secondary badge-pill mr-2'>"+list[i].taskTag[j]+"</span>";
+                            break;
+                    }
+                }
+                content += "<li id="+i+" class=\"list-group-item task-list "+(list[i].isFinish == 1 ? "active" : "")+"\">\n" +
+                    " <div><i class='mr-3 ti-angle-right text-secondary'></i></div>\n"+
+                    "    <div class=\"flex-grow-1 min-width-0\">\n" +
+                    "        <div class=\"mb-1 d-flex align-items-center justify-content-between\">\n" +
+                    "            <div class=\"app-list-title text-truncate\">"+ list[i].taskTitle+"\n" +
+                    "            </div>\n" +
+                    "            <div class=\"pl-3 d-flex align-items-center\">\n" +
+                    "                <div class=\"mr-3 d-sm-inline d-none\">\n" + tags +
+                    "                </div>\n" +
+                    "                <div class=\"mr-3 d-sm-inline d-none\">\n" +
+                    "                    <span class=\"text-muted\">"+list[i].taskDeadline+" 截止</span>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "</li>";
+                tags = "";
+            }
+            $("#task_list").html(content);
+        }
+
+        $("#submit_new_task").click(function () {
+            if(
+                $("#new_task_title").val()          == "" ||
+                $("#new_task_date").val()           == "" ||
+                $("#new_task_time").val()           == "" ||
+                $("#new_task_content").val()        == ""
+                // $("#new_task_appendix_name").val()  == "" ||
+                // $("#new_task_appendix_link").val()  == ""
+            ) {
+                swal("选项不能为空",{icon: "warning"});
+            }else if(($("#new_task_appendix_link").val() != '' && $("#new_task_appendix_name").val()!= '') && (!$("#new_task_appendix_link").val().includes(";")) && (!$("#new_task_appendix_name").val().includes(";"))){
+                swal("各个描述与链接请以\";\"结尾",{icon: "warning"});
+            }else {
+                $.ajax({
+                    url: "/addTask",
+                    type:"post",
+                    data:{
+                        title: $("#new_task_title").val(),
+                        tag: $("#new_task_tag").find("option:selected").text(),
+                        deadline: $("#new_task_date").val()+" "+$("#new_task_time").val(),
+                        content: $("#new_task_content").val(),
+                        appendix: appendixFormat($("#new_task_appendix_name"),$("#new_task_appendix_link")),
+                        projectId: $("#new_task_project_id").val()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.flag){
+                            swal("已创建任务",{
+                                icon: "success"
+                            }).then((isOk)=>{
+                                $("#newTaskModal").modal("hide");
+                                $("#new_task_title").val("");
+                                $("#new_task_date").val("");
+                                $("#new_task_time").val("");
+                                $("#new_task_content").val("");
+                                $("#new_task_appendix_name").val("");
+                                $("#new_task_appendix_link").val("");
+                                $("#new_task_project_id").val("");
+                                location.reload();
+                            });
+                        }else {
+                            swal(data.msg, {icon: "warning"});
+                        }
+                    },
+                    error: function () {
+                        swal("请求失败,请稍后再试",{
+                            icon: "error"
+                        }).then((isOk)=>{
+
+                        });
+                    }
+                });
+            }
+        });
+
+        function appendixFormat(appendix_name, appendix_link) {
+            let a_name = appendix_name.val().split(";");
+            let a_link = appendix_link.val().split(";");
+            let r = "";
+            for(let i = 0 ; i < Math.min(a_name.length, a_link.length)-1 ; i++) {
+                r+= a_name[i]+"|"+a_link[i]+";";
+            }
+            return r;
+        }
+
+        // $(document).on('click', '.app-block .app-content .app-action .action-left input[type="checkbox"]', function() {
+        //     $('.app-lists ul li input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+        //     if ($(this).prop('checked')) {
+        //         $('.app-lists ul li input[type="checkbox"]').closest('li').addClass('active');
+        //     } else {
+        //         $('.app-lists ul li input[type="checkbox"]').closest('li').removeClass('active');
+        //     }
+        // });
+
+        // $(document).on('click', '.app-lists ul li input[type="checkbox"]', function() {
+        //     if ($(this).prop('checked')) {
+        //         swal("任务已完成",{
+        //             icon: "success"
+        //         });
+        //         $(this).closest('li').addClass('active');
+        //     } else {
+        //         swal("任务待完成", {
+        //             icon: "info",
+        //         });
+        //         $(this).closest('li').removeClass('active');
+        //     }
+        // });
+
+        // $("[name='task_checkbox']").click(function () {
+        //     if ($(this).prop('checked')) {
+        //         swal("任务已完成",{
+        //             icon: "success"
+        //         });
+        //         $(this).closest('li').addClass('active');
+        //     } else {
+        //         swal("任务待完成", {
+        //             icon: "info",
+        //         });
+        //         $(this).closest('li').removeClass('active');
+        //     }
+        // });
+        $("#is_finish").click(function () {
+            $.ajax({
+                url: "/finishTask",
+                type: "post",
+                data: {
+                    id: selectId
+                },
+                dataType: "json",
+                success: function(data) {
+                    if(data.flag) {
+                        swal("任务已完成!", {
+                            icon: "success",
+                        }).then((isOk)=>{
+                            location.reload();
+                        })
+                    }else{
+                        swal("请求失败, 请稍后再试", {
+                            icon: "error",
+                        });
+                    }
+                },
+                error: function(data) {
+                    swal("请求失败, 请稍后再试", {
+                        icon: "error",
+                    });
+                }
+            });
+        });
+
+        $("#task_delete").click(function () {
+            swal({
+                title: "确定删除?",
+                text: "删除任务后将无法找回, 确定删除吗",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                $.ajax({
+                    url: "/deleteTask",
+                    type: "post",
+                    data: {
+                        id: selectId
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.flag) {
+                            swal("已删除任务", {
+                                icon: "info",
+                            }).then((isOk)=>{
+                                location.reload();
+                            });
+                        }else{
+                            swal("请求失败, 请稍后再试", {
+                                icon: "error",
+                            });
+                        }
+                    },
+                    error: function(data) {
+                        swal("请求失败, 请稍后再试", {
+                            icon: "error",
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).on('click', '.app-block .app-content .app-content-body .app-lists ul.list-group li.list-group-item', function(e) {
+            selectId = taskContent[this.id].id;
+            // 标题设置
+            $("#task_title").html(taskContent[this.id].taskTitle);
+            $("#task_title_edit").val(taskContent[this.id].taskTitle);
+            // 任务完成设置
+            if(taskContent[this.id].isFinish == 1) {
+                $("#is_finish").html("<i data-feather=\"check\" class=\"mr-2\"></i>已完成");
+            }else {
+                $("#is_finish").html("待完成").removeClass("btn-success").addClass("btn-outline-light");
+            }
+            // 任务发起人设置
+            $("#task_sponsor").html("发起人: "+taskContent[this.id].taskSponsor);
+            // 任务标签设置
+            let tags = "";
+            for(let j = 0 ; j < taskContent[this.id].taskTag.length ; j++) {
+                switch (taskContent[this.id].taskTag[j]) {
+                    case '撰写文稿':
+                        tags += "<span class='badge bg-warning badge-pill mr-2'>"+taskContent[this.id].taskTag[j]+"</span>";
+                        break;
+                    case '媒体后期':
+                        tags += "<span class='badge bg-success badge-pill mr-2'>"+taskContent[this.id].taskTag[j]+"</span>";
+                        break;
+                    case '任务安排':
+                        tags += "<span class='badge bg-danger badge-pill mr-2'>"+taskContent[this.id].taskTag[j]+"</span>";
+                        break;
+                    case '作品交付':
+                        tags += "<span class='badge bg-info badge-pill mr-2'>"+taskContent[this.id].taskTag[j]+"</span>";
+                        break;
+                    case '素材收集':
+                        tags += "<span class='badge bg-secondary badge-pill mr-2'>"+taskContent[this.id].taskTag[j]+"</span>";
+                        break;
+                }
+            }
+            $("#task_tag").html(tags);
+            // 任务相关项目设置
+            $("#task_project_id").attr("href", "/main/file/"+taskContent[this.id].taskProjectId);
+            // 截止日期项目设置
+            $("#task_deadline").html("截止时间: "+taskContent[this.id].taskDeadline);
+            // 任务内容设置
+            $("#task_content").html(taskContent[this.id].taskContent);
+            $("#task_content_edit").html(taskContent[this.id].taskContent);
+            // 任务附录设置
+            let appendix = "";
+            let name_edit = "", link_edit = "";
+            for(let key in taskContent[this.id].taskAppendix) {
+                name_edit += key+";";
+                link_edit += taskContent[this.id].taskAppendix[key]+";";
+                appendix += "<li class=\"small\">\n" +
+                    "    <a href=\""+taskContent[this.id].taskAppendix[key]+"\">\n" +
+                    "        <i class=\"fa fa-paperclip\"></i> <span>"+key+"</span>\n" +
+                    "    </a>\n" +
+                    "</li>";
+            }
+            $("#task_appendix").html(appendix);
+            $("#task_appendix_name_edit").val(name_edit);
+            $("#task_appendix_link_edit").val(link_edit);
+
+            if (!$(e.target).is('.custom-control, .custom-control *, a, a *')) {
+                $('.app-detail').addClass('show').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function() {
+                    $('.app-block .app-content .app-content-body .app-detail .app-detail-article').niceScroll().resize();
+                });
+            }
+        });
+
+        $(document).on('click', 'a.app-detail-close-button', function() {
+            $('.app-detail').removeClass('show');
+            return false;
+        });
+
+        // $(document).on('click', '.app-sidebar-menu-button', function() {
+        //     $('.app-block .app-sidebar, .app-content-overlay').addClass('show');
+        //     $('.app-block .app-sidebar .app-sidebar-menu').niceScroll().resize();
+        //     return false;
+        // });
+        //
+        // $(document).on('click', '.app-content-overlay', function() {
+        //     $('.app-block .app-sidebar, .app-content-overlay').removeClass('show');
+        //     return false;
+        // });
+    });
+</script>
+</html>

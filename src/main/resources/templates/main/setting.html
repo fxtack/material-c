@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link rel="stylesheet" href="vendors/clockpicker/bootstrap-clockpicker.min.css" type="text/css">
+    <link rel="stylesheet" href="vendors/datepicker/daterangepicker.css" type="text/css">
+    <link rel="stylesheet" href="vendors/select2/css/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+<!--    <link rel="shortcut icon" href="assets/media/image/favicon.png" />-->
+<!--    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="vendors/clockpicker/bootstrap-clockpicker.min.css" type="text/css">-->
+<!--    <link rel="stylesheet" href="vendors/datepicker/daterangepicker.css" type="text/css">-->
+</head>
+
+<body class="stretch-layout sticky-navigation shadow-layout">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+                <div class="row app-block">
+                    <div class="col-md-9 app-content">
+                        <div class="card card-body app-content-body">
+                            <div class="app-lists">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel">
+                                        <div class="card-body">
+                                            <h6 class="card-title d-flex justify-content-between align-items-center">
+                                                团队用户
+                                            </h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">名字</th>
+                                                        <th scope="col">职务</th>
+                                                        <th scope="col">权限</th>
+                                                        <th scope="col">联系方式</th>
+                                                        <th scope="col">邮箱</th>
+                                                        <th scope="col">注册日期</th>
+                                                        <th scope="col">邀请码</th>
+                                                        <th class="text-right" scope="col">操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="user_table">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <hr>
+                                            <h6 class="card-title d-flex justify-content-between align-items-center">
+                                                邀请码管理
+                                                <button id="add_new_invite_code" class="btn btn-outline-secondary btn-sm" data-target="#addInviteModal" data-toggle="modal">
+                                                    <i class="mr-2 fa fa-plus"></i> 添加邀请码
+                                                </button>
+                                            </h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">邀请码</th>
+                                                        <th scope="col">创建日期</th>
+                                                        <th scope="col">过期时间</th>
+                                                        <th scope="col">状态</th>
+                                                        <th scope="col">使用次数</th>
+                                                        <th scope="col">备注</th>
+                                                        <th class="text-right" scope="col">操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="invite_table">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 app-sidebar">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <figure class="avatar avatar-lg m-b-20">
+                                    <span id="user_head" class="avatar-title bg-warning rounded-circle"></span>
+                                </figure>
+                                <h5 id="user_name" name="user_name" class="mb-1"></h5>
+                                <p id="user_job" name="user_job" class="text-muted small"></p>
+                                <p id="user_autograph"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+        <div class="modal fade" id="rolesEditModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">修改权限</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" >权限</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="roles_selector">
+                                    <option value="staff">staff</option>
+                                    <option value="admin">admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button id="edit_roles_submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="inviteEditModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">备注修改</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">邀请码备注</label>
+                            <div class="col-sm-9">
+                                <textarea id="invite_remark" style="height: 150px" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button id="invite_remark_edit_submit" class="btn btn-primary">修改</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addInviteModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">添加邀请码</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row row-sm">
+                            <label class="col-sm-3 col-form-label">截止时间</label>
+                            <div class="col-sm-5">
+                                <input id="new_invite_end_date" type="text" class="form-control create-event-datepicker" placeholder="日期">
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="new_invite_end_time" type="text" class="form-control create-event-demo" placeholder="时间">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">备注</label>
+                            <div class="col-sm-9">
+                                <textarea id="new_invite_remark" style="height: 150px" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3"></label>
+                            <div class="col-sm-9">
+                                <button id="add_invite_submit" class="btn btn-primary">新建</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="vendors/bundle.js"></script>
+<script src="vendors/clockpicker/bootstrap-clockpicker.min.js"></script>
+<script src="assets/js/examples/clockpicker.js"></script>
+<script src="vendors/datepicker/daterangepicker.js"></script>
+<script src="assets/js/examples/datepicker.js"></script>
+<script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>
+<script src="assets/js/examples/tagsinput.js"></script>
+<script src="vendors/select2/js/select2.min.js"></script>
+<script src="assets/js/examples/select2.js"></script>
+<script src="assets/js/app.js"></script>
+<!--<script src="vendors/clockpicker/bootstrap-clockpicker.min.js"></script>-->
+<!--<script src="assets/js/examples/clockpicker.js"></script>-->
+<!--<script src="vendors/datepicker/daterangepicker.js"></script>-->
+<!--<script src="assets/js/examples/datepicker.js"></script>-->
+<!--<script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>-->
+<!--<script src="assets/js/examples/tagsinput.js"></script>-->
+<!--<script src="vendors/bundle.js"></script>-->
+<!--<script src="assets/js/app.js"></script>-->
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    let role;
+    $(document).ready(function () {
+        $.ajax({
+            url:"/getInfo",
+            type:"post",
+            data:{},
+            dataType:"json",
+            success:function(data) {
+                role = data.data.roles;
+                $("#user_head").html(data.data.userName.charAt(0));
+                $("#user_name").html(data.data.userName);
+                $("#user_job").html(data.data.job);
+                $("#user_autograph").html(data.data.userAutograph);
+                if(role!='admin') {
+                    $("#add_new_invite_code").attr("disabled","disabled");
+                    $("#add_new_user").attr("disabled", "disabled");
+                    swal("权限不足, 无法操作",{icon: "warning"});
+                }else {
+                    afterGetInfo();
+                }
+            },
+            error:function(data) {
+                swal("请求失败,请稍后再试", {
+                    icon: "warning",
+                });
+            }
+        });
+        function afterGetInfo() {
+            $.ajax({
+                url: "/getAllLoginUser",
+                type: "post",
+                data: {},
+                dataType: "json",
+                success: function(data) {
+                    if(data.flag) {
+                        let s = "";
+                        for(let i = 0 ; i < data.data.length ; i++) {
+                            s+="<tr>\n" +
+                                "    <th scope=\"row\">"+(i+1)+"</th>\n" +
+                                "    <td>"+data.data[i].userName+"</td>\n" +
+                                "    <td>"+(data.data[i].job == null ? '未填写' : data.data[i].job)+"</td>\n" +
+                                "    <td id='td_roles"+data.data[i].id+"'>"+data.data[i].roles+"</td>\n" +
+                                "    <td>"+(data.data[i].userContact  == null ? '未填写' : data.data[i].userContact)+"</td>\n" +
+                                "    <td>"+(data.data[i].userEmail  == null ? '未填写' : data.data[i].userEmail)+"</td>\n" +
+                                "    <td>"+(data.data[i].userCreateDate== null ? '未记录' : data.data[i].userCreateDate)+"</td>\n" +
+                                "    <td>"+(data.data[i].userInvite == null ? '未使用' : data.data[i].userInvite)+"</td>\n" +
+                                "    <td class=\"text-right\">\n" +
+                                "        <div class=\"dropdown\">\n" +
+                                "            <a href=\"#\" class=\"btn btn-sm\"\n" +
+                                "               data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                                "                <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n" +
+                                "            </a>\n" +
+                                "            <div class=\"dropdown-menu dropdown-menu-right\">\n" +
+                                "                <button id='bt_edit_roles"+data.data[i].id+"' name='bt_edit_roles' data-target=\"#rolesEditModal\" data-toggle=\"modal\" class=\"dropdown-item\" type=\"button\">设置权限</button>\n" +
+                                "                <button id='bt_del"+data.data[i].id+"' name='bt_del' class=\"dropdown-item\" type=\"button\">注销账号</button>\n" +
+                                "            </div>\n" +
+                                "        </div>\n" +
+                                "    </td>\n" +
+                                "</tr>";
+                        }
+                        $("#user_table").html(s);
+                        setLoginUserAction();
+                    }else {
+                        swal(data.msg,{icon:"warning"});
+                    }
+                },
+                error: function () {
+                    swal("请求失败, 请稍后再试",{icon:"error"});
+                }
+            });
+            $.ajax({
+                url: "/getAllInviteCode",
+                type: "post",
+                data: {},
+                dataType: "json",
+                success: function(data) {
+                    if(data.flag) {
+                        let s = "";
+                        for(let i = 0 ; i < data.data.length ; i++) {
+                            s+= "<tr>\n" +
+                                "    <th scope=\"row\">"+(i+1)+"</th>\n" +
+                                "    <td>"+data.data[i].inviteValue+"</td>\n" +
+                                "    <td>"+data.data[i].inviteCreateDate+"</td>\n" +
+                                "    <td>"+data.data[i].inviteEndDate+"</td>\n" +
+                                "    <td>"+(data.data[i].inviteStat == 0 ? "未过期":"已过期")+"</td>\n" +
+                                "    <td>"+data.data[i].inviteUsedTimes+"</td>\n" +
+                                "    <td id='td_remark"+data.data[i].id+"'>"+data.data[i].inviteRemark+"</td>\n" +
+                                "    <td class=\"text-right\">\n" +
+                                "        <div class=\"dropdown\">\n" +
+                                "            <a href=\"#\" class=\"btn btn-sm\"\n" +
+                                "               data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+                                "                <i class=\"fa fa-ellipsis-v\" aria-hidden=\"true\"></i>\n" +
+                                "            </a>\n" +
+                                "            <div class=\"dropdown-menu dropdown-menu-right\">\n" +
+                                "                <button id='bt_edit_remark"+data.data[i].id+"' name='bt_edit_remark' class=\"dropdown-item\" type=\"button\" data-target=\"#inviteEditModal\" data-toggle=\"modal\">编辑备注</button>\n" +
+                                "                <button id='bt_del_invite"+data.data[i].id+"' name='bt_del_invite' class=\"dropdown-item\" type=\"button\">删除邀请码</button>\n" +
+                                "            </div>\n" +
+                                "        </div>\n" +
+                                "    </td>\n" +
+                                "</tr>";
+                        }
+                        $("#invite_table").html(s);
+                        setInviteAction();
+                    }else {
+                        swal(data.msg,{icon:"warning"});
+                    }
+                },
+                error: function () {
+                    swal("请求失败, 请稍后再试",{icon:"error"});
+                }
+            });
+        }
+
+        function setLoginUserAction() {
+            $("[name='bt_del']").click(function () {
+                swal({
+                    title: "确定删除?",
+                    text: "删除用户后无法恢复",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if(willDelete) {
+                        $.ajax({
+                            url: "/deleteLoginUser",
+                            type: "post",
+                            data: {
+                                id: this.id.substring(6, this.id.length)
+                            },
+                            dataType: "json",
+                            success: function () {
+                                location.reload();
+                            },
+                            error: function () {
+                                swal("请求失败, 请稍后再试",{icon: "warning"});
+                            }
+                        });
+                    }
+                });
+            });
+            $("[name='bt_edit_roles']").click(function () {
+                let id = this.id.substring(13, this.id.length);
+                $("#roles_selector").val($("#td_roles"+id).html());
+                $("#edit_roles_submit").click(function () {
+                    swal({
+                        title: "确定修改权限?",
+                        text: "若修改自身权限可能导致无法再次改回权限",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                url: "/updateLoginUserRoles",
+                                type: "post",
+                                data: {
+                                    id: id,
+                                    roles:  $("#roles_selector").val()
+                                },
+                                dataType: "json",
+                                success: function () {
+                                    location.reload();
+                                },
+                                error: function () {
+                                    swal("请求失败, 请稍后再试",{icon: "warning"});
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        }
+
+        function setInviteAction() {
+            $("#add_invite_submit").click(function () {
+                $.ajax({
+                    url: "/addInviteCode",
+                    type: "post",
+                    data: {
+                        inviteEndDate: $("#new_invite_end_date").val()+" "+$("#new_invite_end_time").val(),
+                        inviteRemark: $("#new_invite_remark").val()
+                    },
+                    dataType: "json",
+                    success: function () {
+                        location.reload();
+                    },
+                    error: function () {
+                        swal("请求失败, 请稍后再试",{icon: "warning"});
+                    }
+                });
+            });
+            $("[name='bt_edit_remark']").click(function () {
+                let id = this.id.substring(14, this.id.length);
+                $("#invite_remark").val($("#td_remark"+id).html());
+                $("#invite_remark_edit_submit").click(function () {
+                    $.ajax({
+                        url: "/updateInviteCodeRemark",
+                        type: "post",
+                        data: {
+                            id: id,
+                            roles:  $("#invite_remark").val()
+                        },
+                        dataType: "json",
+                        success: function () {
+                            location.reload();
+                        },
+                        error: function () {
+                            swal("请求失败, 请稍后再试",{icon: "warning"});
+                        }
+                    });
+                });
+            });
+            $("[name='bt_del_invite']").click(function () {
+                let id = this.id.substring(13, this.id.length);
+                swal({
+                    title: "确定删除?",
+                    text: "删除后无法恢复",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/deleteInviteCode",
+                            type: "post",
+                            data: {
+                                id: id,
+                            },
+                            dataType: "json",
+                            success: function () {
+                                location.reload();
+                            },
+                            error: function () {
+                                swal("请求失败, 请稍后再试",{icon: "warning"});
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    });
+</script>
+</html>

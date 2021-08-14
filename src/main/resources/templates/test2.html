@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <head>
+        <title>附件管理 - HelloBlog</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--        <link rel="stylesheet" href="/css/attachment.css">-->
+    </head>
+</head>
+<body>
+<div class="title" id="uploadInput" >
+    <div class="file-loading">
+        <input id="input-fas" autocomplete="off" name="file" type="file"
+               class="file-loading" multiple>
+    </div>
+</div>
+<div>
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link rel="stylesheet" href="vendors/quill/quill.snow.css"  type="text/css">
+    <link rel="stylesheet" type="text/css" href="/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/bootstrap-fileinput/css/fileinput.min.css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+
+    <script src="vendors/bundle.js"></script>
+    <script src="vendors/quill/quill.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script type="text/javascript" src="/plugins/vali/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/plugins/vali/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-fileinput/js/locales/zh.js"></script>
+    <script type="text/javascript" src="/plugins/bootstrap-fileinput/themes/fa/theme.js"></script>
+
+    <!--    <link rel="stylesheet" href="vendors/tagsinput/bootstrap-tagsinput.css" type="text/css">-->
+    <!--    <script src="vendors/bundle.js"></script>-->
+    <!--    <script src="vendors/tagsinput/bootstrap-tagsinput.js"></script>-->
+    <!--    <script src="assets/js/examples/tagsinput.js"></script>-->
+</div>
+</body>
+<script>
+    $("#input-fas").fileinput(
+        {
+            theme : "fa",
+            uploadUrl : "/admin/attachment/upload",
+            language : 'zh',
+            uploadAsync : true,
+            allowedFileExtensions : [ 'jpg', 'gif', 'png', 'jpeg',
+                'svg', 'psd' ],
+            enctype : 'multipart/form-data',
+            showClose : false
+        }).on("filebatchuploadcomplete", function(event, files, extra) {
+        $.toast({
+            text : "上传成功！",
+            heading : '提示',
+            icon : 'success',
+            showHideTransition : 'fade',
+            allowToastClose : true,
+            hideAfter : 1000,
+            stack : 1,
+            position : 'top-center',
+            textAlign : 'left',
+            loader : true,
+            loaderBg : '#ffffff',
+            afterHidden : function() {
+                window.location.reload();
+            }
+        });
+    });
+</script>
+</html>

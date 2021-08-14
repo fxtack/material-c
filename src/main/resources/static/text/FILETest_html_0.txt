@@ -1,0 +1,117 @@
+$("#file_path").html(virtual_file_absolute+data.data.pictureName+data.data.pictureSuffix);      // 素材内容的绝对路径
+                    $("#file_content").attr("src", data.data.picturePath);                                          // 素材内容显示
+                    $("#file_name").html(data.data.pictureName);                                                    // 素材名字
+                    $("#file_type").html(data.data.pictureSuffix);                                                  // 素材后缀
+                    $("#file_size").html(data.data.pictureWh+'xp/'+data.data.pictureSize);                          // 素材 (图片) 大小
+                    $("#file_create_date").html(data.data.pictureCreateDate.substring(0,10));                       // 素材创建日期
+                    $("#remark").html(data.data.remark);                                                            // 备注
+                    $("#file_download").attr("href", data.data.picturePath);                                        // 素材下载路径
+                    $("#file_download").attr("download", data.data.pictureName);                                    // 素材下载名称
+                    $("#remark_edit").val(data.data.remark);
+
+
+                                                                       // 备注编辑栏写入默认备注内容
+    $("div[name = 'material_file']").click(function () {
+        $.ajax({
+            url : "/getMessage/",
+            type : "post",
+            data : {
+                isFile : true,
+                id : this.id,
+            },
+            dataType : "json",
+            success : function(data) {
+                if (data.flag == true) {
+                    setBar({
+                        absolutePath : virtual_file_absolute+data.data.pictureName+data.data.pictureSuffix,
+                        content : data.data.picturePath,
+                        name : data.data.pictureName,
+                        type : data.data.pictureSuffix,
+                        size : data.data.pictureWh+'xp/'+data.data.pictureSize,
+                        date : data.data.pictureCreateDate.substring(0,10),
+                        remark : data.data.remark,
+                    });
+                    setOperate({
+                        canDownload : true,
+                        canFavour : true
+                    });
+                    if(data.data.pictureType.substring(0,5) == 'image') {
+                        if($("#file_view").css("display") != 'none') {        // 素材图标的更改
+                            $("#file_view").css("display",'none');
+                        }
+                        $("#image_view").css("display","inline");
+                    }else {
+                        switchFileIcon(data.data.pictureSuffix);
+                    }
+                    // if($("#folder_view").css("display") != 'none') {        // 素材图标的更改
+                    //     $("#folder_view").css("display",'none');
+                    // }
+                    // $("#file_view").css("display","inline");
+                    if(data.data.isFavour == 1) {
+                        $("#favour_ico").css("display", 'block');
+                        $("#file_favour").html("取消收藏");
+                    }else {
+                        $("#favour_ico").css("display", 'none');
+                        $("#file_favour").html("收藏");
+                    }
+                    select_id = data.data.id;                                                                       // 选中的 id
+                    is_file = true;                                                                                 // 选中的选项是否是素材文件
+                } else {
+                    swal("请求失败,请稍后再试", {
+                        icon: "warning",
+                    })
+                }
+            },
+            error: function () {
+                swal("请求失败,请稍后再试", {
+                    icon: "warning",
+                })
+            }
+        });
+    });
+
+
+<audio class="kv-preview-data file-preview-audio" controls="" style="width: 100%; height: 30px;">
+<source src="blob:http://localhost:8005/0e0f53b9-ecb0-4df6-88fe-7c5d294b47ae" type="audio/wav">
+<div class="file-preview-other">
+<span class="file-other-icon"><i class="fa fa-file"></i></span>
+</div>
+</audio>
+
+<div class="kv-file-content">
+<object class="kv-preview-data file-preview-text" title="歌词.txt" data="blob:http://localhost:8005/bfcf676d-20c4-4313-bf0a-240c7d5af002" type="text/plain;charset=UTF-8" style="width: 213px; height: 160px;">
+</object>
+</div>
+
+<div class="table-responsive">
+                                <table class="table">
+                                    <thead class="table-hover">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">类型</th>
+                                            <th scope="col">存储</th>
+                                            <th scope="col">数量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">·</th>
+                                            <td>图片</td>
+                                            <td>12 MB</td>
+                                            <td>5</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">·</th>
+                                            <td>文字</td>
+                                            <td>12 KB</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">·</th>
+                                            <td>视频</td>
+                                            <td>13 MB</td>
+                                            <td>1</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>

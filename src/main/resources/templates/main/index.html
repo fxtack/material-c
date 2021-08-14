@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <link rel="shortcut icon" href="assets/media/image/favicon.png" />
+    <link rel="stylesheet" href="vendors/bundle.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/app.min.css" type="text/css">
+</head>
+
+<body class="shadow-layout">
+    <div th:replace="~{commons/commons::side-nav-bar}"></div>
+    <div id="main">
+        <div th:replace="~{commons/commons::top-nav-bar}"></div>
+        <main class="main-content">
+            <div class="container">
+                <div class="row">
+                    <div class="card text-center col-md-12">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 app-sidebar">
+                                    <h2>欢迎使用</h2>
+                                    <br>
+                                    <p class="card-text">素材集装箱是一款针对于素材文件管理的服务端应用。</p>
+                                    <p>该应用旨在帮助中小型媒体或文字创作团队对多媒体素材进行素材规划、素材存储、素材管理、素材统计、等功能。</p>
+                                    <p>
+                                        并且素材集装箱在保证素材的安全方面做出格外的努力与创新, 特别是当素材集装箱与创作团队搭建的局域网构成系统时能保证良好的可用性与安全性。
+                                    </p>
+                                    <p>
+                                        素材集装箱针对于特定的工作情境开发 —— 中小规模(1TB - 5TB 数据量范围)素材文件集中式管理, 在大规模(10 TB 以上)素材文件所需的的分布式管理情境需求下不适合使用。
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">Create by Fxtack</small>
+                                    </p>
+                                </div>
+                                <div class="col-md-9 app-content">
+                                    <h2 class="card-title">快速入门 1</h2>
+                                    <p class="card-text">点击左侧 "功能" 栏下的选项。进行创作任务的发布与编辑</p>
+                                    <p>
+                                        查看素材情况的统计概览; 处理回收待删除文件。
+                                    </p>
+                                    <p class="card-text"> 点击左侧 "素材文件" 下的 "素材集装箱", 查看已有项目文件夹。</p>
+                                        <p>点击可进入项目文件夹查看相关素材。</p>
+                                    </p>
+                                    <hr>
+                                    <h2 class="card-title">快速入门 2</h2>
+                                    <p class="card-text">项目文件夹中, 可以上传素材文件、创建子项目文件夹、对素材进行排序、 视图修改、模糊搜索、以及多选管理。</p>
+                                        <p>点击素材后可在右侧预览栏对素材文件进行各种操作以及对素材文件的预览。
+                                    </p>
+                                    <hr>
+                                    <h2 class="card-title">提示</h2>
+                                    <p class="card-text">
+                                        素材集装箱目前支持 22 种文件格式的存储: </p>
+                                    <p>
+                                        pdf, xlsx, pptx, docx, txt,
+                                        html, zip, png, jpg, jpeg,
+                                        gif, mp3, wav, mp4, avi,
+                                        mov, js, py, psd, aep, prproj, sesx
+                                    </p>
+                                    <p>其中文字、图片、视频、音频支持素材预览。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="~{commons/commons::bottom-footer-bar}"></div>
+    </div>
+    <script src="vendors/bundle.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+<script th:replace="~{commons/commons::init_user_info}"></script>
+<script>
+    let magnificPopupGalleryConfig = {
+        type: 'image',
+        gallery: {
+            enabled: true
+        },
+        zoom: {
+            enabled: true,
+            duration: 300,
+            easing: 'ease-in-out',
+            opener: function(openerElement) {
+                return openerElement.is('img') ? openerElement : openerElement.find('img');
+            }
+        }
+    };
+
+</script>
+
+</html>

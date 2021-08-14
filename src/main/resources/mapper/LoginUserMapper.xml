@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxtack.materialc.mapper.LoginUserMapper">
+    <resultMap id="LoginUserResultMap" type="com.fxtack.materialc.entity.LoginUser">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_sex" jdbcType="INTEGER" property="userSex"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="authorities" jdbcType="VARCHAR" property="authorities"/>
+        <result column="roles" jdbcType="VARCHAR" property="roles"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="user_address" jdbcType="VARCHAR" property="userAddress"/>
+        <result column="user_contact" jdbcType="VARCHAR" property="userContact"/>
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+        <result column="user_autograph" jdbcType="VARCHAR" property="userAutograph"/>
+        <result column="user_create_date" jdbcType="TIMESTAMP" property="userCreateDate"/>
+        <result column="user_invite" jdbcType="VARCHAR" property="userInvite"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        id, user_name, user_sex, user_password, authorities, roles, job, area, user_address,
+        user_contact, user_email, user_autograph, user_create_date, user_invite
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="LoginUserResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from login_user
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="LoginUserResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from login_user
+        where user_name = #{userName, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAll" resultMap="LoginUserResultMap">
+        select
+        <include refid="BaseColumnList"></include>
+        from login_user
+    </select>
+
+    <delete id="deleteByPrimary" parameterType="java.lang.Integer">
+        delete from login_user where id = #{id, jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.fxtack.materialc.entity.LoginUser">
+        update login_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName, jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex, jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password = #{userPassword, jdbcType=VARCHAR},
+            </if>
+            <if test="authorities != null">
+                authorities = #{authorities, jdbcType=VARCHAR},
+            </if>
+            <if test="roles != null">
+                roles = #{roles, jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                job = #{job, jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                area = #{area, jdbcType=VARCHAR},
+            </if>
+            <if test="userAddress != null">
+                user_address = #{userAddress, jdbcType=VARCHAR},
+            </if>
+            <if test="userContact != null">
+                user_contact = #{userContact, jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null">
+                user_email = #{userEmail, jdbcType=VARCHAR},
+            </if>
+            <if test="userAutograph != null">
+                user_autograph = #{userAutograph, jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateDate != null">
+                user_create_date = #{userCreateDate, jdbcType=TIMESTAMP},
+            </if>
+            <if test="userInvite != null">
+                user_invite = #{userInvite, jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <insert id="insert" parameterType="com.fxtack.materialc.entity.LoginUser">
+        insert into login_user(
+            id,
+            user_name,
+            user_sex,
+            user_password,
+            authorities,
+            roles,
+            job,
+            area,
+            user_address,
+            user_contact,
+            user_email,
+            user_autograph,
+            user_create_date,
+            user_invite
+        )values(
+            #{id, jdbcType=INTEGER},
+            #{userName, jdbcType=VARCHAR},
+            #{userSex, jdbcType=INTEGER},
+            #{userPassword, jdbcType=VARCHAR},
+            #{authorities, jdbcType=VARCHAR},
+            #{roles, jdbcType=VARCHAR},
+            #{job, jdbcType=VARCHAR},
+            #{area, jdbcType=VARCHAR},
+            #{userAddress, jdbcType=VARCHAR},
+            #{userContact, jdbcType=VARCHAR},
+            #{userEmail, jdbcType=VARCHAR},
+            #{userAutograph, jdbcType=VARCHAR},
+            #{userCreateDate, jdbcType=TIMESTAMP},
+            #{userInvite, jdbcType=VARCHAR}
+        )
+    </insert>
+</mapper>
